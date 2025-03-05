@@ -2,6 +2,8 @@ import RPi.GPIO as GPIO
 from hx711 import HX711
 import time
 
+GPIO.setmode(GPIO.BCM)
+
 DT_PIN = 40 #gpio 21 https://pinout.xyz/pinout/5v_power
 SCK_PIN = 11 #gpio 17
 
