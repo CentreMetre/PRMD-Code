@@ -2,7 +2,7 @@ import smbus
 import time
 
 I2C_ADDR = 0x6B
-bus = smbus.SMBus(2) # i2c bus 1
+bus = smbus.SMBus(11) # i2c bus 1
 
 #register addresses
 WHO_AM_I = 0x0F
