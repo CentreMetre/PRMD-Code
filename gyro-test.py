@@ -19,7 +19,7 @@ if bus.read_byte_date(I2C_ADDR, WHO_AM_I) == 0x6C:
 bus.write_byte_data(I2C_ADDR, CTRL1_XL, 0x50)
 
 #config gyroscope (104Hz, 250dps)
-bus.write_byte)data(I2C_ADDR, CRTL2_G, 0x50)
+bus.write_byte_data(I2C_ADDR, CRTL2_G, 0x50)
 
 def read_data(register):
     #read 2 bytes of data from he given register
