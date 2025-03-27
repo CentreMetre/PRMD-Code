@@ -12,7 +12,7 @@ OUTX_L_G = 0x22 #gryo low byte
 OUTX_L_A = 0x28 #accelerator low bye
 
 #check if sensor is detected
-if bus.read_byte_date(I2C_ADDR, WHO_AM_I) == 0x6C:
+if bus.read_byte_data(I2C_ADDR, WHO_AM_I) == 0x6C:
     print("LSM6DSOX detected")
 
 #confidue accelerometer (104Hz, +/-4g)
