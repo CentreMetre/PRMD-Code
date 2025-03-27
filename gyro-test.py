@@ -6,7 +6,7 @@ bus = smbus.SMBus(1) # i2c bus 1
 
 #register addresses
 WHO_AM_I = 0x0F
-CRTL_XL = 0x10
+CRTL1_XL = 0x10
 CTRL2_G = 0x11
 OUTX_L_G = 0x22 #gryo low byte
 OUTX_L_A = 0x28 #accelerator low bye
