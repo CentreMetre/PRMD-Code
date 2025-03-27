@@ -35,4 +35,4 @@ while True:
     gyro_x = read_data(OUTX_L_G)
 
     print(f"Accel X: {accel_x}, Gyro X: {gyro_x}")
-    time.sleep(1)
+    time.sleep(0.1)
