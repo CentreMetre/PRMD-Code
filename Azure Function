@@ -1,0 +1,38 @@
+#r "System.Data"
+
+using System;
+using System.Text;
+using Microsoft.Azure.EventHubs;
+using System.Data.SqlClient;
+using System.Text.RegularExpressions;
+
+public static void Run(EventData eventHubMessage, ILogger log)
+{
+    var messageBody = Encoding.UTF8.GetString(eventHubMessage.Body.Array);
+    log.LogInformation($"Received message: {messageBody}");
+
+    // Example message: "gyro_X=55 gyro_Y=55 gyro_Z=66 accelerometer=77"
+
+    // Simple regex or split parsing
+    var parts = messageBody.Split(' ');
+    int gyroX = int.Parse(parts[0].Split('=')[1]);
+    int gyroY = int.Parse(parts[1].Split('=')[1]);
+    int gyroZ = int.Parse(parts[2].Split('=')[1]);
+    int accelerometer = int.Parse(parts[3].Split('=')[1]);
+
+    // Insert into Azure SQL
+    var connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
+    using (SqlConnection conn = new SqlConnection(connectionString))
+    {
+        conn.Open();
+        var query = "INSERT INTO IOTDATA (gyro_X, gyro_Y, gyro_Z, accelerometer) VALUES (@gx, @gy, @gz, @acc)";
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@gx", gyroX);
+            cmd.Parameters.AddWithValue("@gy", gyroY);
+            cmd.Parameters.AddWithValue("@gz", gyroZ);
+            cmd.Parameters.AddWithValue("@acc", accelerometer);
+            cmd.ExecuteNonQuery();
+        }
+    }
+}

@@ -17,7 +17,7 @@ def main():
         logging.info("Device client connected.")
         
         while True:
-            message = "Temperature: 24.7°C"
+            message = "gyro_X=55 gyro_Y=55 gyro_Z=66 accelerometer=77"
             try:
                 logging.info(f"Sending message: {message}")
                 device_client.send_message(message)
