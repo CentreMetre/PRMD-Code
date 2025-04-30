@@ -1,0 +1,10 @@
+SELECT
+    gyro_X,
+    gyro_Y,
+    gyro_Z,
+    accelerometer,
+    System.Timestamp AS Timestamp
+INTO
+    SqlOutput
+FROM
+    IoTHubInput
