@@ -40,8 +40,17 @@ def read_data(register):
     return value
 
 while True:
+    # Accelerometer readings
     accel_x = read_data(OUTX_L_A)
-    gyro_x = read_data(OUTX_L_G)
+    accel_y = read_data(OUTY_L_A)
+    accel_z = read_data(OUTZ_L_A)
 
-    print(f"Accel X: {accel_x}, Gyro X: {gyro_x}")
+    # Gyroscope readings
+    gyro_x = read_data(OUTX_L_G)
+    gyro_y = read_data(OUTY_L_G)
+    gyro_z = read_data(OUTZ_L_G)
+
+    print(f"Accel X: {accel_x}, Y: {accel_y}, Z: {accel_z}")
+    print(f"Gyro  X: {gyro_x}, Y: {gyro_y}, Z: {gyro_z}")
+    print()
     time.sleep(0.1)
