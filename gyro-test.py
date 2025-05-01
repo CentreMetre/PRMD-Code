@@ -11,6 +11,15 @@ CTRL2_G = 0x11
 OUTX_L_G = 0x22 #gryo low byte
 OUTX_L_A = 0x28 #accelerator low bye
 
+WHO_AM_I = 0x0F
+CTRL1_XL = 0x10
+CTRL2_G = 0x11
+OUTY_L_G = 0x24
+OUTZ_L_G = 0x26
+OUTY_L_A = 0x2A
+OUTZ_L_A = 0x2C
+
+
 #check if sensor is detected
 if bus.read_byte_data(I2C_ADDR, WHO_AM_I) == 0x6C:
     print("LSM6DSOX detected")
