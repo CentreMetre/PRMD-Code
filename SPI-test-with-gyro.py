@@ -19,5 +19,6 @@ try:
 
         # Print the received data
         print("Received Data:", data)
+        time.sleep(0.1)
 except KeyboardInterrupt:
     spi.close()
