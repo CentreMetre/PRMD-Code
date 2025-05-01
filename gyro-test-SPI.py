@@ -49,6 +49,10 @@ write_register(CTRL2_G, 0x40)
 # Read loop
 try:
     while True:
+        print(f"Accel Bytes: {accel_bytes}")
+        print(f"Gyro Bytes: {gyro_bytes}")
+
+
         accel_bytes = read_multiple(OUTX_L_XL, 6)
         gyro_bytes = read_multiple(OUTX_L_G, 6)
 
