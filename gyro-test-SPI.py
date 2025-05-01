@@ -58,5 +58,10 @@ try:
 
         gx = twos_complement(gyro_bytes[0], gyro_bytes[1])
         gy = twos_complement(gyro_bytes[2], gyro_bytes[3])
-        gz = twos_comp_
+        gz = twos_complement(gyro_bytes[4], gyro_bytes[5])
+
+        print(f"Accel X:{ax}, Y:{ay}, Z:{az} | Gyro X:{gx}, Y:{gy}, Z:{gz}")
+        time.sleep(0.1)
+except KeyboardInterrupt:
+    spi.close()
 
