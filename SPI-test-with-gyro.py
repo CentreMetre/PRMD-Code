@@ -9,13 +9,13 @@ spi.open(0, 0)
 
 # Set SPI speed (in Hz), mode (0 or 3), and bit length
 spi.max_speed_hz = 50000  # Change this as needed
-spi.mode = 0  # SPI mode (0 to 3, depending on your device)
+spi.mode = 3  # SPI mode (0 to 3, depending on your device)
 spi.bits_per_word = 8  # 8 bits per word, most common
 
 try:
     while True:
         # Read data from SPI (example: reading 3 bytes)
-        data = spi.readbytes(8)
+        data = spi.readbytes(3)
 
         # Print the received data
         print("Received Data:", data)
