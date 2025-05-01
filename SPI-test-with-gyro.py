@@ -12,11 +12,12 @@ spi.max_speed_hz = 50000  # Change this as needed
 spi.mode = 0  # SPI mode (0 to 3, depending on your device)
 spi.bits_per_word = 8  # 8 bits per word, most common
 
-while True:
-    # Read data from SPI (example: reading 3 bytes)
-    data = spi.readbytes(3)
+try:
+    while True:
+        # Read data from SPI (example: reading 3 bytes)
+        data = spi.readbytes(3)
 
-    # Print the received data
-    print("Received Data:", data)
+        # Print the received data
+        print("Received Data:", data)
 except KeyboardInterrupt:
     spi.close()
