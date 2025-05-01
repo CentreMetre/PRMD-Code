@@ -49,12 +49,14 @@ write_register(CTRL2_G, 0x40)
 # Read loop
 try:
     while True:
-        print(f"Accel Bytes: {accel_bytes}")
-        print(f"Gyro Bytes: {gyro_bytes}")
 
 
         accel_bytes = read_multiple(OUTX_L_XL, 6)
         gyro_bytes = read_multiple(OUTX_L_G, 6)
+
+
+        print(f"Accel Bytes: {accel_bytes}")
+        print(f"Gyro Bytes: {gyro_bytes}")
 
         ax = twos_complement(accel_bytes[0], accel_bytes[1])
         ay = twos_complement(accel_bytes[2], accel_bytes[3])
