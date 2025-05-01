@@ -15,7 +15,7 @@ spi.bits_per_word = 8  # 8 bits per word, most common
 try:
     while True:
         # Read data from SPI (example: reading 3 bytes)
-        data = spi.readbytes(3)
+        data = spi.readbytes(8)
 
         # Print the received data
         print("Received Data:", data)
