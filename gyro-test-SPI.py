@@ -4,7 +4,7 @@ import time
 # SPI device on CE0 (GPIO8 / Pin 24)
 spi = spidev.SpiDev()
 spi.open(0, 0)  # bus 0, device 0 (CE0)
-spi.max_speed_hz = 1000000  # 1 MHz
+spi.max_speed_hz = 1000  # 1 KHz
 spi.mode = 0b11  # CPOL=1, CPHA=1 per LSM6DSOX datasheet
 
 # Register addresses
