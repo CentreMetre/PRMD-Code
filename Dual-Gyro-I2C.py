@@ -75,16 +75,16 @@ while True:
     accel2 = read_accel(SENSOR_2_ADDR)
     gyro2 = read_gyro(SENSOR_2_ADDR)
 
-    # Check if readings were successful
+    # Format the output with padding to align values in the columns
     if accel1 is not None and gyro1 is not None:
-        print(f"Sensor 1 Accel: {accel1}, Gyro: {gyro1}")
+        print(f"{accel1['x']:<20}{accel1['y']:<20}{accel1['z']:<20}{gyro1['x']:<20}{gyro1['y']:<20}{gyro1['z']:<20}", end="")
     else:
-        print("Error: Failed to read data from Sensor 1.")
+        print(f"{'Error':<20}{'Error':<20}{'Error':<20}{'Error':<20}{'Error':<20}{'Error':<20}", end="")
 
     if accel2 is not None and gyro2 is not None:
-        print(f"Sensor 2 Accel: {accel2}, Gyro: {gyro2}")
+        print(f"{accel2['x']:<20}{accel2['y']:<20}{accel2['z']:<20}{gyro2['x']:<20}{gyro2['y']:<20}{gyro2['z']:<20}")
     else:
-        print("Error: Failed to read data from Sensor 2.")
+        print(f"{'Error':<20}{'Error':<20}{'Error':<20}{'Error':<20}{'Error':<20}{'Error':<20}")
 
     time.sleep(1)
 
