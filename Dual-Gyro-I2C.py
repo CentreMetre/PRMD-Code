@@ -41,7 +41,7 @@ if not init_sensor(SENSOR_1_ADDR) or not init_sensor(SENSOR_2_ADDR):
 # Loop to read and print
 def readout():
     while True:
-            try:
+        try:
             a1 = read_axes(SENSOR_1_ADDR, ACCEL_REGS)
             g1 = read_axes(SENSOR_1_ADDR, GYRO_REGS)
             a2 = read_axes(SENSOR_2_ADDR, ACCEL_REGS)
