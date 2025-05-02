@@ -97,8 +97,6 @@ while True:
     accel2 = read_accel(SENSOR_2_ADDR)
     gyro2  = read_gyro(SENSOR_2_ADDR)
 
-    print("Sensor 1 Accel:", accel1)
-    print("Sensor 1 Gyro :", gyro1)
-    print("Sensor 2 Accel:", accel2)
-    print("Sensor 2 Gyro :", gyro2)
+    print("Sensor 1 Accel: " + accel1 + "Sensor 2 Accel:" + accel2)
+    print("Sensor 1 Gyro :" + gyro1 + "Sensor 2 Gyro :" + gyro2)
 
