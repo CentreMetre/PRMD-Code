@@ -1,9 +1,18 @@
 SELECT
-    gyro_X,
-    gyro_Y,
-    gyro_Z,
-    accelerometer,
-    System.Timestamp AS Timestamp
+    gyro_upper_X,
+    gyro_upper_Y,
+    gyro_upper_Z,
+    gyro_Lower_X,
+    gyro_Lower_Y,
+    gyro_Lower_Z,
+    accelerometer_Upper_X,
+    accelerometer_Upper_Y,
+    accelerometer_Upper_Z,
+    accelerometer_Lower_X,
+    accelerometer_Lower_Y,
+    accelerometer_Lower_Z,
+    SessionID,
+    CAST(Timestamp AS DATETIME) AS Timestamp
 INTO
     SqlOutput
 FROM
