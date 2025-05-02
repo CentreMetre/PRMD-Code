@@ -90,15 +90,15 @@ def read_gyro(addr):
 # Initialise both sensors
 init_sensor(SENSOR_1_ADDR)
 init_sensor(SENSOR_2_ADDR)
+while True:
+    # Read and print data
+    accel1 = read_accel(SENSOR_1_ADDR)
+    gyro1  = read_gyro(SENSOR_1_ADDR)
+    accel2 = read_accel(SENSOR_2_ADDR)
+    gyro2  = read_gyro(SENSOR_2_ADDR)
 
-# Read and print data
-accel1 = read_accel(SENSOR_1_ADDR)
-gyro1  = read_gyro(SENSOR_1_ADDR)
-accel2 = read_accel(SENSOR_2_ADDR)
-gyro2  = read_gyro(SENSOR_2_ADDR)
-
-print("Sensor 1 Accel:", accel1)
-print("Sensor 1 Gyro :", gyro1)
-print("Sensor 2 Accel:", accel2)
-print("Sensor 2 Gyro :", gyro2)
+    print("Sensor 1 Accel:", accel1)
+    print("Sensor 1 Gyro :", gyro1)
+    print("Sensor 2 Accel:", accel2)
+    print("Sensor 2 Gyro :", gyro2)
 
