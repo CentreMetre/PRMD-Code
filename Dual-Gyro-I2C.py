@@ -39,22 +39,29 @@ if not init_sensor(SENSOR_1_ADDR) or not init_sensor(SENSOR_2_ADDR):
     exit("One or both sensors failed to initialise.")
 
 # Loop to read and print
-while True:
-    a1 = read_axes(SENSOR_1_ADDR, ACCEL_REGS)
-    g1 = read_axes(SENSOR_1_ADDR, GYRO_REGS)
-    a2 = read_axes(SENSOR_2_ADDR, ACCEL_REGS)
-    g2 = read_axes(SENSOR_2_ADDR, GYRO_REGS)
+def readout():
+    while True:
+            try:
+            a1 = read_axes(SENSOR_1_ADDR, ACCEL_REGS)
+            g1 = read_axes(SENSOR_1_ADDR, GYRO_REGS)
+            a2 = read_axes(SENSOR_2_ADDR, ACCEL_REGS)
+            g2 = read_axes(SENSOR_2_ADDR, GYRO_REGS)
 
-    def fmt(label, val):
-        return f"{label}:{val:>6}" if val is not None else f"{label}: ERR"
+            def fmt(label, val):
+                return f"{label}:{val:>6}" if val is not None else f"{label}: ERR"
 
-    output = " | ".join([
-        fmt("A1x", a1['x']), fmt("A1y", a1['y']), fmt("A1z", a1['z']),
-        fmt("G1x", g1['x']), fmt("G1y", g1['y']), fmt("G1z", g1['z']),
-        fmt("A2x", a2['x']), fmt("A2y", a2['y']), fmt("A2z", a2['z']),
-        fmt("G2x", g2['x']), fmt("G2y", g2['y']), fmt("G2z", g2['z']),
-    ])
+            output = " | ".join([
+                fmt("A1x", a1['x']), fmt("A1y", a1['y']), fmt("A1z", a1['z']),
+                fmt("G1x", g1['x']), fmt("G1y", g1['y']), fmt("G1z", g1['z']),
+                fmt("A2x", a2['x']), fmt("A2y", a2['y']), fmt("A2z", a2['z']),
+                fmt("G2x", g2['x']), fmt("G2y", g2['y']), fmt("G2z", g2['z']),
+            ])
 
-    print(output)
-    time.sleep(1)
+            print(output)
+            time.sleep(1)
+        except IOError:
+            init_senor(addr)
+            readout()
+
+
 
