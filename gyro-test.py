@@ -1,7 +1,7 @@
 import time
 import board
 import busio
-import adafruit_lsm6dsox
+import adafruit_circuitpython_lsm6dsox
 
 # Create the shared I2C bus (for /dev/i2c-1 on Raspberry Pi)
 i2c = busio.I2C(board.SCL, board.SDA)
