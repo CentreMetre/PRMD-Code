@@ -1,34 +1,81 @@
 import time
-import board
-import busio
-import adafruit_circuitpython_lsm6dsox
 
-# Create the shared I2C bus (for /dev/i2c-1 on Raspberry Pi)
-i2c = busio.I2C(board.SCL, board.SDA)
+import smbus2
 
-# Initialise the two sensors at different I2C addresses
-sensor1 = adafruit_lsm6dsox.LSM6DSOX(i2c, address=0x6A)  # SDO = GND or unconnected
-#sensor2 = adafruit_lsm6dsox.LSM6DSOX(i2c, address=0x6B)  # SDO = VCC
+I2C_BUS = smbus2.SMBus(1)  # The I2C bus
 
-# Read and print data from both sensors
-while True:
-    accel1 = sensor1.acceleration
-    gyro1 = sensor1.gyro
-    temp1 = sensor1.temperature
+# The sensor addresses
+SENSOR_UPPER = 0x6A  # The upper part of the limb, e.g. upper arm in arm test
+SENSOR_LOWER = 0x6B  # The lower part of the limb, e.g. lower arm in arm test.
+# DO (or D0) has to be high power to be this address: Connect to 3Vo
 
-#    accel2 = sensor2.acceleration
-#    gyro2 = sensor2.gyro
-#    temp2 = sensor2.temperature
+"""
+VARIABLE MEANINGS
+ACCEL   - Accelerometer data
+GYRO    - Gyro data
+LOW     - Lower half (low byte) of data
+HIGH    - High half (high byte) of data
+X, Y, Z - Axes
+Example:
+ACCEL_LOW_X
+This is accelerometer data, the low byte of said data, for the X axis 
+"""
 
-    print("=== Sensor 1 (0x6A) ===")
-    print(f"Accel: X={accel1[0]:.2f}, Y={accel1[1]:.2f}, Z={accel1[2]:.2f} m/s²")
-    print(f"Gyro:  X={gyro1[0]:.2f}, Y={gyro1[1]:.2f}, Z={gyro1[2]:.2f} dps")
-    print(f"Temp:  {temp1:.2f} °C")
+# Data output addresses
+ACCEL_LOW_X = 0x28
+ACCEL_HIGH_X = 0x29
+ACCEL_LOW_Y = 0x2A
+ACCEL_HIGH_Y = 0x2B
+ACCEL_LOW_Z = 0x2C
+ACCEL_HIGH_Z = 0x2D
 
-#    print("\n=== Sensor 2 (0x6B) ===")
-#    print(f"Accel: X={accel2[0]:.2f}, Y={accel2[1]:.2f}, Z={accel2[2]:.2f} m/s²")
-#    print(f"Gyro:  X={gyro2[0]:.2f}, Y={gyro2[1]:.2f}, Z={gyro2[2]:.2f} dps")
-#    print(f"Temp:  {temp2:.2f} °C\n")
-#
-    time.sleep(0.5)
+GYRO_LOW_X = 0x22
+GYRO_HIGH_X = 0x23
+GYRO_LOW_Y = 0x24
+GYRO_HIGH_Y = 0x25
+GYRO_LOW_Z = 0x26
+GYRO_HIGH_Z = 0x27
 
+CTRL_ACCEL = 0x10
+ACCEL_CONFIG = 0b01000000
+
+CTRL_GYRO = 0x11
+GYRO_CONFIG = 0b01000000
+
+
+def read_register(sensor_address, register):
+    return read_register(sensor_address, register)
+
+
+def write_register(sensor_address, register, value):
+    """
+    Write a value to a register of a sensor using smbus2
+    :param sensor_address: The sensor to write to
+    :param register: The register to write to
+    :param value: The value to write
+    :return:
+    """
+    I2C_BUS.write_byte_data(sensor_address, register, value)
+
+
+def initial_config():
+    write_register(SENSOR_UPPER, CTRL_ACCEL, ACCEL_CONFIG)
+    time.sleep(0.1)
+    write_register(SENSOR_LOWER, CTRL_ACCEL, ACCEL_CONFIG)
+    time.sleep(0.1)
+    write_register(SENSOR_UPPER, CTRL_GYRO, GYRO_CONFIG)
+    time.sleep(0.1)
+    write_register(SENSOR_LOWER, CTRL_GYRO, GYRO_CONFIG)
+    time.sleep(0.1)
+    print("Config Complete:")
+    print(f"""
+    UPPER ACCEL: {read_register(SENSOR_UPPER, CTRL_ACCEL)}
+    LOWER ACCEL: {read_register(SENSOR_LOWER, CTRL_ACCEL)}
+    UPPER GYRO: {read_register(SENSOR_UPPER, CTRL_GYRO)}
+    LOWER GYRO: {read_register(SENSOR_LOWER, CTRL_GYRO)}
+    """)
+
+
+
+if __name__ == '__main__':
+    initial_config()
