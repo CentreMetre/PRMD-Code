@@ -77,3 +77,38 @@ def initial_config():
 
 if __name__ == '__main__':
     initial_config()
+
+class LSM6DSOX:
+    """
+
+    """
+
+    address = 0x00
+
+    def __init__(self, address):
+        if address != 0x6A or address != 0x6B:
+            raise ValueError("Invalid address")
+        self.address = address
+
+    def initial_config(self):
+        write_register(CTRL_ACCEL, ACCEL_CONFIG)
+        time.sleep(0.1)
+        write_register(CTRL_GYRO, GYRO_CONFIG)
+        print("Config Complete:")
+        print(f"""
+        UPPER ACCEL: {read_register(SENSOR_UPPER, CTRL_ACCEL)}
+        LOWER ACCEL: {read_register(SENSOR_LOWER, CTRL_ACCEL)}
+        """)
+
+    def write_register(self, register, value):
+        """
+        Write a value to a register of a sensor using smbus2
+        :param sensor_address: The sensor to write to
+        :param register: The register to write to
+        :param value: The value to write
+        :return:
+        """
+        I2C_BUS.write_byte_data(self.address, register, value)
+
+    def read_register(self, register):
+        return I2C_BUS.read_word_data(self.address, register)
