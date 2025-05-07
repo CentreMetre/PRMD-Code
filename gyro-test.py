@@ -1,5 +1,4 @@
 import time
-
 import smbus2
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
