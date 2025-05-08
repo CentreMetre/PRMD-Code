@@ -24,11 +24,11 @@ OUTZ_L_A = 0x2C
 if bus.read_byte_data(I2C_ADDR, WHO_AM_I) == 0x6C:
     print("LSM6DSOX detected")
 
-#confidue accelerometer (104Hz, +/-4g)
-bus.write_byte_data(I2C_ADDR, CTRL1_XL, 0x50)
+#config accelerometer (104Hz, +/-4g)
+bus.write_byte_data(I2C_ADDR, CTRL1_XL, 0x40)
 
 #config gyroscope (104Hz, 250dps)
-bus.write_byte_data(I2C_ADDR, CTRL2_G, 0x50)
+bus.write_byte_data(I2C_ADDR, CTRL2_G, 0x42)
 
 def read_data(register):
     #read 2 bytes of data from he given register
