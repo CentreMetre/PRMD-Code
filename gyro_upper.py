@@ -20,18 +20,19 @@ OUTY_L_A = 0x2A
 OUTZ_L_A = 0x2C
 
 
-#check if sensor is detected
+# check if sensor is detected
 if bus.read_byte_data(I2C_ADDR, WHO_AM_I) == 0x6C:
     print("LSM6DSOX detected")
 
-#config accelerometer (104Hz, +/-4g)
-bus.write_byte_data(I2C_ADDR, CTRL1_XL, 0x40)
+# config accelerometer (104Hz, +/-4g)
+bus.write_byte_data(I2C_ADDR, CTRL1_XL, 0x40)  # 0x40 used for most sensitivity
 
-#config gyroscope (104Hz, 250dps)
-bus.write_byte_data(I2C_ADDR, CTRL2_G, 0x42)
+# config gyroscope (104Hz, 250dps)
+bus.write_byte_data(I2C_ADDR, CTRL2_G, 0x42)  # 0x42 used for most sensitivity
+
 
 def read_data(register):
-    #read 2 bytes of data from he given register
+    # read 2 bytes of data from the given register
     low = bus.read_byte_data(I2C_ADDR, register)
     high = bus.read_byte_data(I2C_ADDR, register + 1)
     value = (high << 8) | low
