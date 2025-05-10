@@ -2,6 +2,7 @@ import time
 import smbus2
 import env
 import utils.prmd_json as pjson
+import sensor_enum
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
 
@@ -226,5 +227,5 @@ if __name__ == '__main__':
     print("")
     readings = read_sensors_for_time_with_interval(1, 0.25)
     print("Done")
-    print(pjson.convert_reading_list_to_json(readings))
+    print(pjson.convert_reading_list_to_json(readings, sensor_enum.SensorType.GYRO_ACCEL))
 
