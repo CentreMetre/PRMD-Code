@@ -81,5 +81,5 @@ if __name__ == '__main__':
     while True:
         UPPER_ACCEL_LOW_X = read_register(SENSOR_UPPER, ACCEL_LOW_X)
         UPPER_ACCEL_HIGH_X = read_register(SENSOR_UPPER, ACCEL_HIGH_X)
-        UPPER_ACCEL_X = UPPER_ACCEL_LOW_X | ACCEL_HIGH_X
+        UPPER_ACCEL_X = (ACCEL_HIGH_X << 8) | UPPER_ACCEL_LOW_X
         print(UPPER_ACCEL_X)
