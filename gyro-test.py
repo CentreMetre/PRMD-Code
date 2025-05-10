@@ -79,7 +79,56 @@ def initial_config():
 if __name__ == '__main__':
     initial_config()
     while True:
+        # Read accelerometer data from SENSOR_UPPER
         UPPER_ACCEL_LOW_X = read_register(SENSOR_UPPER, ACCEL_LOW_X)
         UPPER_ACCEL_HIGH_X = read_register(SENSOR_UPPER, ACCEL_HIGH_X)
-        UPPER_ACCEL_X = (ACCEL_HIGH_X << 8) | UPPER_ACCEL_LOW_X
+        UPPER_ACCEL_X = (UPPER_ACCEL_HIGH_X << 8) | UPPER_ACCEL_LOW_X
+
+        UPPER_ACCEL_LOW_Y = read_register(SENSOR_UPPER, ACCEL_LOW_Y)
+        UPPER_ACCEL_HIGH_Y = read_register(SENSOR_UPPER, ACCEL_HIGH_Y)
+        UPPER_ACCEL_Y = (UPPER_ACCEL_HIGH_Y << 8) | UPPER_ACCEL_LOW_Y
+
+        UPPER_ACCEL_LOW_Z = read_register(SENSOR_UPPER, ACCEL_LOW_Z)
+        UPPER_ACCEL_HIGH_Z = read_register(SENSOR_UPPER, ACCEL_HIGH_Z)
+        UPPER_ACCEL_Z = (UPPER_ACCEL_HIGH_Z << 8) | UPPER_ACCEL_LOW_Z
+
+        # Read accelerometer data from SENSOR_LOWER
+        LOWER_ACCEL_LOW_X = read_register(SENSOR_LOWER, ACCEL_LOW_X)
+        LOWER_ACCEL_HIGH_X = read_register(SENSOR_LOWER, ACCEL_HIGH_X)
+        LOWER_ACCEL_X = (LOWER_ACCEL_HIGH_X << 8) | LOWER_ACCEL_LOW_X
+
+        LOWER_ACCEL_LOW_Y = read_register(SENSOR_LOWER, ACCEL_LOW_Y)
+        LOWER_ACCEL_HIGH_Y = read_register(SENSOR_LOWER, ACCEL_HIGH_Y)
+        LOWER_ACCEL_Y = (LOWER_ACCEL_HIGH_Y << 8) | LOWER_ACCEL_LOW_Y
+
+        LOWER_ACCEL_LOW_Z = read_register(SENSOR_LOWER, ACCEL_LOW_Z)
+        LOWER_ACCEL_HIGH_Z = read_register(SENSOR_LOWER, ACCEL_HIGH_Z)
+        LOWER_ACCEL_Z = (LOWER_ACCEL_HIGH_Z << 8) | LOWER_ACCEL_LOW_Z
+
+        # Read gyroscope data from SENSOR_UPPER
+        UPPER_GYRO_LOW_X = read_register(SENSOR_UPPER, GYRO_LOW_X)
+        UPPER_GYRO_HIGH_X = read_register(SENSOR_UPPER, GYRO_HIGH_X)
+        UPPER_GYRO_X = (UPPER_GYRO_HIGH_X << 8) | UPPER_GYRO_LOW_X
+
+        UPPER_GYRO_LOW_Y = read_register(SENSOR_UPPER, GYRO_LOW_Y)
+        UPPER_GYRO_HIGH_Y = read_register(SENSOR_UPPER, GYRO_HIGH_Y)
+        UPPER_GYRO_Y = (UPPER_GYRO_HIGH_Y << 8) | UPPER_GYRO_LOW_Y
+
+        UPPER_GYRO_LOW_Z = read_register(SENSOR_UPPER, GYRO_LOW_Z)
+        UPPER_GYRO_HIGH_Z = read_register(SENSOR_UPPER, GYRO_HIGH_Z)
+        UPPER_GYRO_Z = (UPPER_GYRO_HIGH_Z << 8) | UPPER_GYRO_LOW_Z
+
+        # Read gyroscope data from SENSOR_LOWER
+        LOWER_GYRO_LOW_X = read_register(SENSOR_LOWER, GYRO_LOW_X)
+        LOWER_GYRO_HIGH_X = read_register(SENSOR_LOWER, GYRO_HIGH_X)
+        LOWER_GYRO_X = (LOWER_GYRO_HIGH_X << 8) | LOWER_GYRO_LOW_X
+
+        LOWER_GYRO_LOW_Y = read_register(SENSOR_LOWER, GYRO_LOW_Y)
+        LOWER_GYRO_HIGH_Y = read_register(SENSOR_LOWER, GYRO_HIGH_Y)
+        LOWER_GYRO_Y = (LOWER_GYRO_HIGH_Y << 8) | LOWER_GYRO_LOW_Y
+
+        LOWER_GYRO_LOW_Z = read_register(SENSOR_LOWER, GYRO_LOW_Z)
+        LOWER_GYRO_HIGH_Z = read_register(SENSOR_LOWER, GYRO_HIGH_Z)
+        LOWER_GYRO_Z = (LOWER_GYRO_HIGH_Z << 8) | LOWER_GYRO_LOW_Z
+
         print(UPPER_ACCEL_X)
