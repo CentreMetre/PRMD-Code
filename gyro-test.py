@@ -114,12 +114,7 @@ def read_sensors_for_time_with_interval(seconds, interval):
     end = start + seconds
     current_time = time.time()
 
-    readings = {
-            'lower_accel': {'X': [], 'Y': [], 'Z': []},
-            'upper_accel': {'X': [], 'Y': [], 'Z': []},
-            'lower_gyro': {'X': [], 'Y': [], 'Z': []},
-            'upper_gyro': {'X': [], 'Y': [], 'Z': []}
-    }
+    readings = {}
 
     while current_time < end:
         # Read accelerometer data from SENSOR_UPPER
@@ -144,22 +139,26 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
         current_time = time.time()
 
-        # add the reading and the times to the readings list
-        readings['lower_accel']['X'].append({'value': UPPER_ACCEL_X, 'timestamp': current_time})
-        readings['lower_accel']['Y'].append({'value': UPPER_ACCEL_Y, 'timestamp': current_time})
-        readings['lower_accel']['Z'].append({'value': UPPER_ACCEL_Z, 'timestamp': current_time})
+        new_reading = {} # reset reading
 
-        readings['upper_accel']['X'].append({'value': LOWER_ACCEL_X, 'timestamp': current_time})
-        readings['upper_accel']['Y'].append({'value': LOWER_ACCEL_Y, 'timestamp': current_time})
-        readings['upper_accel']['Z'].append({'value': LOWER_ACCEL_Z, 'timestamp': current_time})
+        new_reading = {
+            "lower_accel_x": LOWER_ACCEL_X,
+            "lower_accel_y": LOWER_ACCEL_Y,
+            "lower_accel_z": LOWER_ACCEL_Z,
+            "upper_accel_x": UPPER_ACCEL_X,
+            "upper_accel_y": UPPER_ACCEL_Y,
+            "upper_accel_z": UPPER_ACCEL_Z,
+            "lower_gyro_x": LOWER_GYRO_X,
+            "lower_gyro_y": LOWER_GYRO_Y,
+            "lower_gyro_z": LOWER_GYRO_Z,
+            "upper_gyro_x": UPPER_GYRO_X,
+            "upper_gyro_y": UPPER_GYRO_Y,
+            "upper_gyro_z": UPPER_GYRO_Z
+        }
 
-        readings['lower_gyro']['X'].append({'value': LOWER_GYRO_X, 'timestamp': current_time})
-        readings['lower_gyro']['Y'].append({'value': LOWER_GYRO_Y, 'timestamp': current_time})
-        readings['lower_gyro']['Z'].append({'value': LOWER_GYRO_Z, 'timestamp': current_time})
+        readings[current_time] = new_reading
 
-        readings['upper_gyro']['X'].append({'value': UPPER_GYRO_X, 'timestamp': current_time})
-        readings['upper_gyro']['Y'].append({'value': UPPER_GYRO_Y, 'timestamp': current_time})
-        readings['upper_gyro']['Z'].append({'value': UPPER_GYRO_Z, 'timestamp': current_time})
+        print(readings)
 
         time.sleep(interval)
 
@@ -177,4 +176,4 @@ def get_calibration_data():
 if __name__ == '__main__':
     initial_config()
     get_calibration_data()
-    read_sensors_for_time_with_interval(10, env.read_interval)
+    read_sensors_for_time_with_interval(3, env.read_interval)
