@@ -1,6 +1,7 @@
 import time
 import smbus2
 import env
+import utils.prmd_json as pjson
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
 
@@ -122,9 +123,6 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
     while time.time() < end:
 
-        print("Sleeping for ", interval)
-        time.sleep(interval)
-
 
         print("time.time in loop: " + str(time.time()))
         # Read accelerometer data from SENSOR_UPPER
@@ -171,8 +169,15 @@ def read_sensors_for_time_with_interval(seconds, interval):
         print(readings[current_time])
 
 
+
+        print("Sleeping for ", interval)
+        time.sleep(interval)
+
+    return readings
+
+
 def read_sensors_for_time(seconds):
-    read_sensors_for_time_with_interval(seconds, 0)
+    return read_sensors_for_time_with_interval(seconds, 0)
 
 
 def get_calibration_data():
@@ -219,5 +224,7 @@ if __name__ == '__main__':
     print("")
     print("")
     print("")
-    read_sensors_for_time_with_interval(1, 0.25)
+    readings = read_sensors_for_time_with_interval(1, 0.25)
     print("Done")
+    print(pjson.convert_reading_list_to_json(readings))
+
