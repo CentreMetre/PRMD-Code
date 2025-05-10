@@ -116,7 +116,7 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
     readings = {}
 
-    while current_time < end:
+    while time.time() < end:
         # Read accelerometer data from SENSOR_UPPER
         UPPER_ACCEL_X = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
         UPPER_ACCEL_Y = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
@@ -163,9 +163,6 @@ def read_sensors_for_time_with_interval(seconds, interval):
         time.sleep(interval)
 
 
-
-
-
 def read_sensors_for_time(seconds):
     read_sensors_for_time_with_interval(seconds, 0)
 
@@ -173,7 +170,8 @@ def read_sensors_for_time(seconds):
 def get_calibration_data():
     calibration_data = read_sensors_for_time(3)
 
+
 if __name__ == '__main__':
     initial_config()
     get_calibration_data()
-    read_sensors_for_time_with_interval(1, env.read_interval)
+    read_sensors_for_time_with_interval(1, 1)
