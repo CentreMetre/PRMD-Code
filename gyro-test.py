@@ -1,5 +1,6 @@
 import time
 import smbus2
+import env
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
 
@@ -52,11 +53,20 @@ def write_register(sensor_address, register, value):
     :param sensor_address: The sensor to write to
     :param register: The register to write to
     :param value: The value to write
-    :return:
     """
     I2C_BUS.write_byte_data(sensor_address, register, value)
 
+
 def read_sensor_axis(sensor_address, register_low, register_high):
+    """
+    Args:
+        sensor_address: The address of the sensor to read, upper or lower
+        register_low: the low address of the register to read
+        register_high: the high address of the register to read
+
+    Returns: the signed value
+
+    """
     high = read_register(sensor_address, register_high)
     low = read_register(sensor_address, register_low)
     value = (high << 8) | low
@@ -66,6 +76,12 @@ def read_sensor_axis(sensor_address, register_low, register_high):
 
 
 def initial_config():
+
+    """
+
+    Returns:Nothing
+
+    """
     write_register(SENSOR_UPPER, CTRL_ACCEL, ACCEL_CONFIG)
     time.sleep(0.1)
     write_register(SENSOR_LOWER, CTRL_ACCEL, ACCEL_CONFIG)
@@ -82,11 +98,30 @@ def initial_config():
     LOWER GYRO: {read_register(SENSOR_LOWER, CTRL_GYRO)}
     """)
 
+def read_sensors_for_time_with_interval(seconds, interval):
+    """
 
+    Reads the sensors and writes the data to the
 
-if __name__ == '__main__':
-    initial_config()
-    while True:
+    Args:
+        seconds:The time in seconds to read
+        interval:The time between readings in seconds (can be < 1)
+
+    Returns: The readings as a list
+
+    """
+    start = time.time()
+    end = start + seconds
+    current_time = time.time()
+
+    readings = {
+            'lower_accel': {'X': [], 'Y': [], 'Z': []},
+            'upper_accel': {'X': [], 'Y': [], 'Z': []},
+            'lower_gyro': {'X': [], 'Y': [], 'Z': []},
+            'upper_gyro': {'X': [], 'Y': [], 'Z': []}
+    }
+
+    while current_time < end:
         # Read accelerometer data from SENSOR_UPPER
         UPPER_ACCEL_X = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
         UPPER_ACCEL_Y = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
@@ -107,12 +142,39 @@ if __name__ == '__main__':
         LOWER_GYRO_Y = read_sensor_axis(SENSOR_LOWER, GYRO_LOW_Y, GYRO_HIGH_Y)
         LOWER_GYRO_Z = read_sensor_axis(SENSOR_LOWER, GYRO_LOW_Z, GYRO_HIGH_Z)
 
-        print("SENSOR_UPPER ACCELEROMETER:")
-        print(f"  X: {UPPER_ACCEL_X}, Y: {UPPER_ACCEL_Y}, Z: {UPPER_ACCEL_Z}")
-        print("SENSOR_UPPER GYROSCOPE:")
-        print(f"  X: {UPPER_GYRO_X}, Y: {UPPER_GYRO_Y}, Z: {UPPER_GYRO_Z}")
+        current_time = time.time()
 
-        print("\nSENSOR_LOWER ACCELEROMETER:")
-        print(f"  X: {LOWER_ACCEL_X}, Y: {LOWER_ACCEL_Y}, Z: {LOWER_ACCEL_Z}")
-        print("SENSOR_LOWER GYROSCOPE:")
-        print(f"  X: {LOWER_GYRO_X}, Y: {LOWER_GYRO_Y}, Z: {LOWER_GYRO_Z}")
+        # add the reading and the times to the readings list
+        readings['lower_accel']['X'].append({'value': UPPER_ACCEL_X, 'timestamp': current_time})
+        readings['lower_accel']['Y'].append({'value': UPPER_ACCEL_Y, 'timestamp': current_time})
+        readings['lower_accel']['Z'].append({'value': UPPER_ACCEL_Z, 'timestamp': current_time})
+
+        readings['upper_accel']['X'].append({'value': LOWER_ACCEL_X, 'timestamp': current_time})
+        readings['upper_accel']['Y'].append({'value': LOWER_ACCEL_Y, 'timestamp': current_time})
+        readings['upper_accel']['Z'].append({'value': LOWER_ACCEL_Z, 'timestamp': current_time})
+
+        readings['lower_gyro']['X'].append({'value': LOWER_GYRO_X, 'timestamp': current_time})
+        readings['lower_gyro']['Y'].append({'value': LOWER_GYRO_Y, 'timestamp': current_time})
+        readings['lower_gyro']['Z'].append({'value': LOWER_GYRO_Z, 'timestamp': current_time})
+
+        readings['upper_gyro']['X'].append({'value': UPPER_GYRO_X, 'timestamp': current_time})
+        readings['upper_gyro']['Y'].append({'value': UPPER_GYRO_Y, 'timestamp': current_time})
+        readings['upper_gyro']['Z'].append({'value': UPPER_GYRO_Z, 'timestamp': current_time})
+
+        time.sleep(interval)
+
+
+
+
+
+def read_sensors_for_time(seconds):
+    read_sensors_for_time_with_interval(seconds, 0)
+
+
+def get_calibration_data():
+    calibration_data = read_sensors_for_time(3)
+
+if __name__ == '__main__':
+    initial_config()
+    get_calibration_data()
+    read_sensors_for_time_with_interval(10, env.read_interval)
