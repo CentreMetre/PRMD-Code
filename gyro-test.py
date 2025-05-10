@@ -43,7 +43,7 @@ GYRO_CONFIG = 0b01000000
 
 
 def read_register(sensor_address, register):
-    return read_register(sensor_address, register)
+    return I2C_BUS.read_byte_data(sensor_address, register)
 
 
 def write_register(sensor_address, register, value):
