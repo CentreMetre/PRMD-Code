@@ -121,6 +121,11 @@ def read_sensors_for_time_with_interval(seconds, interval):
     readings = {}
 
     while time.time() < end:
+
+        print("Sleeping for ", interval)
+        time.sleep(interval)
+
+
         print("time.time in loop: " + str(time.time()))
         # Read accelerometer data from SENSOR_UPPER
         UPPER_ACCEL_X = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
@@ -164,8 +169,6 @@ def read_sensors_for_time_with_interval(seconds, interval):
         readings[current_time] = new_reading
 
         print(readings[current_time])
-
-        time.sleep(interval)
 
 
 def read_sensors_for_time(seconds):
