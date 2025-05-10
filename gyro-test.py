@@ -131,4 +131,12 @@ if __name__ == '__main__':
         LOWER_GYRO_HIGH_Z = read_register(SENSOR_LOWER, GYRO_HIGH_Z)
         LOWER_GYRO_Z = (LOWER_GYRO_HIGH_Z << 8) | LOWER_GYRO_LOW_Z
 
-        print(UPPER_ACCEL_X)
+        print("SENSOR_UPPER ACCELEROMETER:")
+        print(f"  X: {UPPER_ACCEL_X}, Y: {UPPER_ACCEL_Y}, Z: {UPPER_ACCEL_Z}")
+        print("SENSOR_UPPER GYROSCOPE:")
+        print(f"  X: {UPPER_GYRO_X}, Y: {UPPER_GYRO_Y}, Z: {UPPER_GYRO_Z}")
+
+        print("\nSENSOR_LOWER ACCELEROMETER:")
+        print(f"  X: {LOWER_ACCEL_X}, Y: {LOWER_ACCEL_Y}, Z: {LOWER_ACCEL_Z}")
+        print("SENSOR_LOWER GYROSCOPE:")
+        print(f"  X: {LOWER_GYRO_X}, Y: {LOWER_GYRO_Y}, Z: {LOWER_GYRO_Z}")
