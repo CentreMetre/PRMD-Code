@@ -78,3 +78,7 @@ def initial_config():
 
 if __name__ == '__main__':
     initial_config()
+    while True:
+        UPPER_ACCEL_LOW_X = read_register(SENSOR_UPPER, ACCEL_LOW_X)
+        UPPER_ACCEL_HIGH_X = read_register(SENSOR_UPPER, ACCEL_HIGH_X)
+        UPPER_ACCEL_X = UPPER_ACCEL_LOW_X | ACCEL_HIGH_X
