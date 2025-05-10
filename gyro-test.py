@@ -158,7 +158,7 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
         readings[current_time] = new_reading
 
-        print(readings)
+        print(readings[current_time])
 
         time.sleep(interval)
 
