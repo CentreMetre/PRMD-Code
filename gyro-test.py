@@ -36,10 +36,10 @@ GYRO_LOW_Z = 0x26
 GYRO_HIGH_Z = 0x27
 
 CTRL_ACCEL = 0x10
-ACCEL_CONFIG = 0b01000000
+ACCEL_CONFIG = 0x40
 
 CTRL_GYRO = 0x11
-GYRO_CONFIG = 0b01000000
+GYRO_CONFIG = 0x42
 
 
 def read_register(sensor_address, register):
