@@ -56,6 +56,14 @@ def write_register(sensor_address, register, value):
     """
     I2C_BUS.write_byte_data(sensor_address, register, value)
 
+def read_sensor_axis(sensor_address, register_low, register_high):
+    high = read_register(sensor_address, register_high)
+    low = read_register(sensor_address, register_low)
+    value = (high << 8) | low
+    if value > 32767:
+        value -= 65536  # Convert to signed value
+    return value
+
 
 def initial_config():
     write_register(SENSOR_UPPER, CTRL_ACCEL, ACCEL_CONFIG)
