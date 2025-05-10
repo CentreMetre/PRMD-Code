@@ -175,3 +175,4 @@ if __name__ == '__main__':
     initial_config()
     get_calibration_data()
     read_sensors_for_time_with_interval(1, 1)
+    print("Done")
