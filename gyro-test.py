@@ -176,7 +176,7 @@ def read_sensors_for_time(seconds):
 
 
 def get_calibration_data():
-    calibration_data = read_sensors_for_time(3)
+    calibration_data = read_sensors_for_time(0.5)
 
 
 if __name__ == '__main__':
@@ -219,5 +219,5 @@ if __name__ == '__main__':
     print("")
     print("")
     print("")
-    read_sensors_for_time_with_interval(1, 1)
+    read_sensors_for_time_with_interval(1, 0.25)
     print("Done")
