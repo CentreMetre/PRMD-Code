@@ -231,7 +231,7 @@ if __name__ == '__main__':
     print("Done")
     created_json = pjson.convert_reading_list_to_json(readings, sensor_enum.SensorType.GYRO_ACCEL)
     file_name = str(session_start) + ".json"
-    full_path = env.session_output_dir + file_name
+    full_path = "/home/pi/prmd/data/sessions/" + file_name
     with open(file_name, "w") as outfile:
         json.dump(created_json, outfile, indent=4)
 
