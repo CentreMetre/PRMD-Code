@@ -281,9 +281,12 @@ def calculate_mean_calibration_data(calibration_data):
 
 
 def apply_calibration(mean_calibration_data, final_readings):
+    calibrated_readings = final_readings
     for name in sensor_names:
-        for timestamp in final_readings:
-            final_readings[timestamp][name] = final_readings[timestamp][name] - mean_calibration_data[name]
+        for timestamp in calibrated_readings:
+            calibrated_readings[timestamp][name] = calibrated_readings[timestamp][name] - mean_calibration_data[name]
+
+    return calibrated_readings
 
 
 if __name__ == '__main__':
@@ -335,9 +338,9 @@ if __name__ == '__main__':
     print("Uncalibrated data:")
     print(readings)
 
-    apply_calibration(mean_calibration_data, readings)
+    calibrated_readings = apply_calibration(mean_calibration_data, readings)
     print("\n\nCalibrated data:")
-    print(mean_calibration_data)
+    print(calibrated_readings)
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
     file_name = str(session_start)
