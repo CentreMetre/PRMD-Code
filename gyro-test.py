@@ -1,8 +1,9 @@
 import time
+
+import numpy as np
 import smbus2
 import env
 import utils.prmd_json as pjson
-import json
 import sensor_enum
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
@@ -23,7 +24,6 @@ Example:
 ACCEL_LOW_X
 This is accelerometer data, the low byte of said data, for the X axis 
 """
-
 # Data output addresses
 ACCEL_LOW_X = 0x28
 ACCEL_HIGH_X = 0x29
@@ -70,6 +70,37 @@ UGX = "upper_gyro_x" # upper gyro x
 UGY = "upper_gyro_y"
 UGZ = "upper_gyro_z"
 
+sensor_keys = {
+    "LAX": "lower_accel_x",
+    "LAY": "lower_accel_y",
+    "LAZ": "lower_accel_z",
+    "UAX": "upper_accel_x",
+    "UAY": "upper_accel_y",
+    "UAZ": "upper_accel_z",
+    "LGX": "lower_gyro_x",
+    "LGY": "lower_gyro_y",
+    "LGZ": "lower_gyro_z",
+    "UGX": "upper_gyro_x",
+    "UGY": "upper_gyro_y",
+    "UGZ": "upper_gyro_z"
+}
+
+sensor_full_names = sensor_keys.values()
+
+sensor_names = [
+    "lower_accel_x",
+    "lower_accel_y",
+    "lower_accel_z",
+    "upper_accel_x",
+    "upper_accel_y",
+    "upper_accel_z",
+    "lower_gyro_x",
+    "lower_gyro_y",
+    "lower_gyro_z",
+    "upper_gyro_x",
+    "upper_gyro_y",
+    "upper_gyro_z"
+]
 
 def read_register(sensor_address, register):
     return I2C_BUS.read_byte_data(sensor_address, register)
@@ -216,13 +247,30 @@ def get_calibration_data():
     return calibration_data
 
 
-# def mean_calibration_data(calibration_data):
-#     for time in calibration_data:
+def mean_calibration_data(calibration_data):
+    mean_calibration_data = {}
+
+    for name in sensor_names:
+        mean_calibration_data[name] = None
+
+    for name in sensor_names:
+        values = []
+        for timestamp in calibration_data:
+            values.append(timestamp[name])
+
+        mean_calibration_data[name] = np.mean(values)
+
+    return mean_calibration_data
 
 
 
-# def apply_calibration(calibration_data, final_reading):
-#     for reading in final_reading
+def apply_calibration(calibration_data, final_reading):
+    for name in sensor_names:
+        values = []
+        for timestamp in calibration_data:
+            values.append(timestamp[name])
+
+        mean_calibration_data[name] = np.mean(values)
 
 if __name__ == '__main__':
     session_start = time.time()
