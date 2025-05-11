@@ -230,6 +230,7 @@ if __name__ == '__main__':
     readings = read_sensors_for_time_with_interval(1, 0.25)
     print("Done reading")
 
+    readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
     file_name = str(session_start) + ".json"
     pjson.write_to_json_file(readings, file_name)
 
