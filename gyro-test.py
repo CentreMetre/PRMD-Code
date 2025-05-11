@@ -45,6 +45,31 @@ ACCEL_CONFIG = 0x40
 CTRL_GYRO = 0x11
 GYRO_CONFIG = 0x42
 
+calibration_data_global = 0
+
+"""
+Variable names for easier use of the key values for dicts.
+L = lower
+A = accelerometer
+G = gyro
+X,Y,Z = axes
+"""
+LAX = "lower_accel_x" # lower accel x
+LAY = "lower_accel_y"
+LAZ = "lower_accel_z"
+
+UAX = "upper_accel_x" # upper accel x
+UAY = "upper_accel_y"
+UAZ = "upper_accel_z"
+
+LGX = "lower_gyro_x" # lower gyro x
+LGY = "lower_gyro_y"
+LGZ = "lower_gyro_z"
+
+UGX = "upper_gyro_x" # upper gyro x
+UGY = "upper_gyro_y"
+UGZ = "upper_gyro_z"
+
 
 def read_register(sensor_address, register):
     return I2C_BUS.read_byte_data(sensor_address, register)
@@ -152,19 +177,23 @@ def read_sensors_for_time_with_interval(seconds, interval):
         new_reading = {} # reset reading
 
         new_reading = {
-            "lower_accel_x": LOWER_ACCEL_X,
-            "lower_accel_y": LOWER_ACCEL_Y,
-            "lower_accel_z": LOWER_ACCEL_Z,
-            "upper_accel_x": UPPER_ACCEL_X,
-            "upper_accel_y": UPPER_ACCEL_Y,
-            "upper_accel_z": UPPER_ACCEL_Z,
-            "lower_gyro_x": LOWER_GYRO_X,
-            "lower_gyro_y": LOWER_GYRO_Y,
-            "lower_gyro_z": LOWER_GYRO_Z,
-            "upper_gyro_x": UPPER_GYRO_X,
-            "upper_gyro_y": UPPER_GYRO_Y,
-            "upper_gyro_z": UPPER_GYRO_Z
+            LAX: LOWER_ACCEL_X,  # lower_accel_x -> LAX
+            LAY: LOWER_ACCEL_Y,  # lower_accel_y -> LAY
+            LAZ: LOWER_ACCEL_Z,  # lower_accel_z -> LAZ
+
+            UAX: UPPER_ACCEL_X,  # upper_accel_x -> UAX
+            UAY: UPPER_ACCEL_Y,  # upper_accel_y -> UAY
+            UAZ: UPPER_ACCEL_Z,  # upper_accel_z -> UAZ
+
+            LGX: LOWER_GYRO_X, # lower_gyro_x -> LGX
+            LGY: LOWER_GYRO_Y, # lower_gyro_y -> LGY
+            LGZ: LOWER_GYRO_Z, # lower_gyro_z -> LGZ
+
+            UGX: UPPER_GYRO_X, # upper_gyro_x -> UGX
+            UGY: UPPER_GYRO_Y, # upper_gyro_y -> UGY
+            UGZ: UPPER_GYRO_Z  # upper_gyro_z -> UGZ
         }
+
 
         readings[current_time] = new_reading
 
@@ -183,13 +212,22 @@ def read_sensors_for_time(seconds):
 
 
 def get_calibration_data():
-    calibration_data = read_sensors_for_time(0.5)
+    calibration_data = read_sensors_for_time(3)
+    return calibration_data
 
+
+def mean_calibration_data(calibration_data):
+    for time in calibration_data:
+
+
+
+def apply_calibration(calibration_data, final_reading):
+    for reading in final_reading
 
 if __name__ == '__main__':
     session_start = time.time()
     initial_config()
-    get_calibration_data()
+    calibration_data_global = get_calibration_data()
     print("")
     print("")
     print("")
