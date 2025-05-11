@@ -344,7 +344,7 @@ if __name__ == '__main__':
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
     file_name = str(session_start)
-    pjson.write_to_file_json(readings, file_name, settings.SESSION_DIR)
+    pjson.write_to_json_file(readings, file_name, settings.SESSION_DIR)
 
     print("Done writing to file")
 
