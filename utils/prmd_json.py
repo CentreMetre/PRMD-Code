@@ -24,6 +24,7 @@ def write_to_json_file(readings, file_name, dir_path):
 
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
 
+    print(full_path)
 
     with open(full_path, 'w') as f:
         json.dump(readings, f, indent=4)
