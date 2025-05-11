@@ -1,14 +1,11 @@
+import datetime
 import os
 import json
-from communication.client import get_iot_hub_client
+from models.session import Session
+from models.message import Message
+from settings import SESSION_DIR
 from azure.iot.device import IoTHubDeviceClient
-from utils.file_reader import read_file
-
-SESSIONS_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    "data",
-    "sessions"
-)
+from utils.file_io import read_file
 
 
 def upload_all_sessions(client: IoTHubDeviceClient) -> None:
@@ -24,20 +21,25 @@ def upload_all_sessions(client: IoTHubDeviceClient) -> None:
     Raises:
         Exception: If there is an error while uploading session files to Azure IoT Hub.
     """
-    for filename in os.listdir(SESSIONS_DIR):
-        file_path = os.path.join(SESSIONS_DIR, filename)
-
+    for filename in os.listdir(SESSION_DIR):
         if not filename.endswith(".json"):
             continue  # skip non-json files
 
         try:
-            session_data = read_file(file_path)
+            file_path = os.path.join(SESSION_DIR, filename)
+            raw_data = read_file(file_path)
+            session = Session.from_json(json.loads(raw_data))
 
-            for entry in session_data:
-                message = json.dumps(entry)
-                client.send_message(message)
+            for dp in session.get_all_datapoints():
 
-            os.remove(file_path)  # remove the file after upload
+                timestamp = dp["timestamp"]
+                data = dp["data"]
+                msg = Message(data, session.get_session_id(), timestamp)
+
+                client.send_message(json.dumps(msg.to_dict()))
+
+            # os.remove(file_path)  # remove the file after upload
+            # TODO: Uncomment this line to remove the file after upload
 
         except Exception as e:
             raise Exception(
@@ -45,21 +47,21 @@ def upload_all_sessions(client: IoTHubDeviceClient) -> None:
             ) from e
 
 
-def run_upload() -> None:
+def run_upload(client: IoTHubDeviceClient) -> None:
     """
     Main function to run the upload process.
 
-    This function creates an IoTHubDeviceClient instance, connects to Azure IoT Hub,
-    and uploads all session files from the session directory. It handles any exceptions
-    that may occur during the process and ensures proper cleanup of resources.
+    This function connects to the IoT Hub client and calls the upload_all_sessions function
+    to upload all session files. It handles any exceptions that may occur during the process.
+
+    Args:
+        client (IoTHubDeviceClient): The IoT Hub client to use for uploading session files.
 
     Raises:
         Exception: If there is an error while uploading session files to Azure IoT Hub.
     """
     try:
-        client = get_iot_hub_client()
         client.connect()
-
         upload_all_sessions(client)
 
     except Exception as e:
@@ -69,3 +71,26 @@ def run_upload() -> None:
 
     finally:
         client.disconnect()
+
+
+def test_output():
+
+    for filename in os.listdir(SESSION_DIR):
+        if not filename.endswith(".json"):
+            continue  # skip non-json files
+
+        try:
+            file_path = os.path.join(SESSION_DIR, filename)
+            raw_data = read_file(file_path)
+            session = Session.from_json(json.loads(raw_data))
+
+            for dp in session.get_all_datapoints():
+                timestamp = dp["timestamp"]
+                data = dp["data"]
+                msg = Message(data, session.get_session_id(), timestamp)
+                print(json.dumps(msg.to_dict(), indent=4))
+
+        except Exception as e:
+            raise Exception(
+                f"An error occurred while uploading session file {filename} to Azure IoT Hub."
+            ) from e

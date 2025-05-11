@@ -1,9 +1,8 @@
 import time
-
 import numpy as np
 import smbus2
-import env
-import utils.prmd_json as pjson
+import settings
+import utils.file_io as pjson
 import sensor_enum
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
@@ -24,6 +23,7 @@ Example:
 ACCEL_LOW_X
 This is accelerometer data, the low byte of said data, for the X axis 
 """
+
 # Data output addresses
 ACCEL_LOW_X = 0x28
 ACCEL_HIGH_X = 0x29
@@ -70,37 +70,6 @@ UGX = "upper_gyro_x" # upper gyro x
 UGY = "upper_gyro_y"
 UGZ = "upper_gyro_z"
 
-sensor_keys = {
-    "LAX": "lower_accel_x",
-    "LAY": "lower_accel_y",
-    "LAZ": "lower_accel_z",
-    "UAX": "upper_accel_x",
-    "UAY": "upper_accel_y",
-    "UAZ": "upper_accel_z",
-    "LGX": "lower_gyro_x",
-    "LGY": "lower_gyro_y",
-    "LGZ": "lower_gyro_z",
-    "UGX": "upper_gyro_x",
-    "UGY": "upper_gyro_y",
-    "UGZ": "upper_gyro_z"
-}
-
-sensor_full_names = sensor_keys.values()
-
-sensor_names = [
-    "lower_accel_x",
-    "lower_accel_y",
-    "lower_accel_z",
-    "upper_accel_x",
-    "upper_accel_y",
-    "upper_accel_z",
-    "lower_gyro_x",
-    "lower_gyro_y",
-    "lower_gyro_z",
-    "upper_gyro_x",
-    "upper_gyro_y",
-    "upper_gyro_z"
-]
 
 def read_register(sensor_address, register):
     return I2C_BUS.read_byte_data(sensor_address, register)
@@ -318,7 +287,7 @@ if __name__ == '__main__':
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
     file_name = str(session_start)
-    pjson.write_to_json_file(readings, file_name, env.session_output_dir )
+    pjson.write_to_file_json(readings, file_name, settings.SESSION_DIR)
 
     print("Done writing to file")
 

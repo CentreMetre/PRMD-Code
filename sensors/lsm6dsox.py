@@ -67,21 +67,22 @@ def initial_config():
     write_register(SENSOR_LOWER, CTRL_GYRO, GYRO_CONFIG)
     time.sleep(0.1)
     print("Config Complete:")
-    print(f"""
+    print(
+        f"""
     UPPER ACCEL: {read_register(SENSOR_UPPER, CTRL_ACCEL)}
     LOWER ACCEL: {read_register(SENSOR_LOWER, CTRL_ACCEL)}
     UPPER GYRO: {read_register(SENSOR_UPPER, CTRL_GYRO)}
     LOWER GYRO: {read_register(SENSOR_LOWER, CTRL_GYRO)}
-    """)
+    """
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     initial_config()
 
-class LSM6DSOX:
-    """
 
-    """
+class LSM6DSOX:
+    """ """
 
     address = 0x00
 
@@ -95,10 +96,12 @@ class LSM6DSOX:
         time.sleep(0.1)
         write_register(CTRL_GYRO, GYRO_CONFIG)
         print("Config Complete:")
-        print(f"""
+        print(
+            f"""
         UPPER ACCEL: {read_register(SENSOR_UPPER, CTRL_ACCEL)}
         LOWER ACCEL: {read_register(SENSOR_LOWER, CTRL_ACCEL)}
-        """)
+        """
+        )
 
     def write_register(self, register, value):
         """

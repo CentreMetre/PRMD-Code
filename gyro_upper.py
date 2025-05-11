@@ -1,8 +1,8 @@
 import smbus
 import time
 
-I2C_ADDR = 0x6A # Upper sensor
-bus = smbus.SMBus(1) # i2c bus 1
+I2C_ADDR = 0x6A  # Upper sensor
+bus = smbus.SMBus(1)  # i2c bus 1
 
 # register addresses
 WHO_AM_I = 0x0F
@@ -40,9 +40,10 @@ def read_data(register):
         value -= 65536  # Convert to signed value
     return value
 
+
 calibration_readings = {
-    'accel': {'X': [], 'Y': [], 'Z': []},
-    'gyro': {'X': [], 'Y': [], 'Z': []}
+    "accel": {"X": [], "Y": [], "Z": []},
+    "gyro": {"X": [], "Y": [], "Z": []},
 }
 
 # while True:
@@ -63,14 +64,13 @@ calibration_readings = {
 
 
 def calibrate_final_data(data):
-    accel_bias_X_mean = calculate_mean(calibration_readings['accel']['X'])
-    accel_bias_Y_mean = calculate_mean(calibration_readings['accel']['Y'])
-    accel_bias_Z_mean = calculate_mean(calibration_readings['accel']['Z'])
+    accel_bias_X_mean = calculate_mean(calibration_readings["accel"]["X"])
+    accel_bias_Y_mean = calculate_mean(calibration_readings["accel"]["Y"])
+    accel_bias_Z_mean = calculate_mean(calibration_readings["accel"]["Z"])
 
-    gyro_bias_X_mean = calculate_mean(calibration_readings['gyro']['X'])
-    gyro_bias_Y_mean = calculate_mean(calibration_readings['gyro']['Y'])
-    gyro_bias_Z_mean = calculate_mean(calibration_readings['gyro']['Z'])
-
+    gyro_bias_X_mean = calculate_mean(calibration_readings["gyro"]["X"])
+    gyro_bias_Y_mean = calculate_mean(calibration_readings["gyro"]["Y"])
+    gyro_bias_Z_mean = calculate_mean(calibration_readings["gyro"]["Z"])
 
 
 def get_calibration_data():
@@ -82,30 +82,30 @@ def read_sensors_for_time(seconds):
     end = start + seconds
 
     readings = {
-        'accel': {'X': [], 'Y': [], 'Z': []},
-        'gyro': {'X': [], 'Y': [], 'Z': []}
+        "accel": {"X": [], "Y": [], "Z": []},
+        "gyro": {"X": [], "Y": [], "Z": []},
     }
 
     while True:
         # Accelerometer readings
         accel_x = read_data(OUTX_L_A)
-        readings['accel']['X'].append(accel_x)
+        readings["accel"]["X"].append(accel_x)
 
         accel_y = read_data(OUTY_L_A)
-        readings['accel']['Y'].append(accel_y)
+        readings["accel"]["Y"].append(accel_y)
 
         accel_z = read_data(OUTZ_L_A)
-        readings['accel']['Z'].append(accel_z)
+        readings["accel"]["Z"].append(accel_z)
 
         # Gyroscope readings
         gyro_x = read_data(OUTX_L_G)
-        readings['gyro']['X'].append(gyro_x)
+        readings["gyro"]["X"].append(gyro_x)
 
         gyro_y = read_data(OUTY_L_G)
-        readings['gyro']['Y'].append(gyro_y)
+        readings["gyro"]["Y"].append(gyro_y)
 
         gyro_z = read_data(OUTZ_L_G)
-        readings['gyro']['Z'].append(gyro_z)
+        readings["gyro"]["Z"].append(gyro_z)
 
         print(f"Accel X: {accel_x}, Y: {accel_y}, Z: {accel_z}")
         print(f"Gyro  X: {gyro_x}, Y: {gyro_y}, Z: {gyro_z}")
@@ -113,9 +113,10 @@ def read_sensors_for_time(seconds):
         if time.time() >= end:
             return readings
 
+
 def calculate_mean(list):
     length = 0
     total_sum = 0
     for i in range(len(list)):
-        length =+ 1
+        length = +1
         total_sum = total_sum + list[i]
