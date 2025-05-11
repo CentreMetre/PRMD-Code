@@ -273,6 +273,7 @@ def calculate_mean_calibration_data(calibration_data):
 
     for name in summed_calibration_data:
         final_value = summed_calibration_data[name]/reading_count
+        mean_calibration_data[name] = final_value
 
 
     return mean_calibration_data
