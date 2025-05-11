@@ -216,13 +216,13 @@ def get_calibration_data():
     return calibration_data
 
 
-def mean_calibration_data(calibration_data):
-    for time in calibration_data:
+# def mean_calibration_data(calibration_data):
+#     for time in calibration_data:
 
 
 
-def apply_calibration(calibration_data, final_reading):
-    for reading in final_reading
+# def apply_calibration(calibration_data, final_reading):
+#     for reading in final_reading
 
 if __name__ == '__main__':
     session_start = time.time()
