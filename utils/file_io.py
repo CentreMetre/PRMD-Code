@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def read_file(file_path: str) -> str:
@@ -25,24 +26,23 @@ def read_file(file_path: str) -> str:
         raise e
 
 
-def write_to_file_json(file_path: str, data: dict) -> None:
+def write_to_json_file(readings, file_name, dir_path):
     """
-    Writes the given data to a file in JSON format.
 
     Args:
-        file_path (str): The path to the file where the data will be written.
-        data (dict): The data to be written to the file in JSON format.
+        dir_path: the path to the directory to write the json file.
+        file_name: the name of the file to be written.
+        readings: The reading data.
 
     Returns:
-        None
 
-    Raises:
-        Exception: If there is an error while writing to the file.
     """
-    try:
-        with open(file_path, "w") as file:
-            json.dump(data, file)
-    except Exception as e:
-        raise Exception(
-            f"An error occurred while writing to the file {file_path}."
-        ) from e
+
+    full_path = os.path.join(dir_path, file_name + ".json")
+
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+    print(full_path)
+
+    with open(full_path, 'w') as f:
+        json.dump(readings, f, indent=4)
