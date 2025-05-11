@@ -23,17 +23,11 @@ def get_iot_hub_client() -> IoTHubDeviceClient:
     """
 
     # load variable from .env
-    connection_string = os.getenv(
-        "AZURE_IOT_HUB_CONNECTION_STRING"
-    )
+    connection_string = os.getenv("AZURE_IOT_HUB_CONNECTION_STRING")
 
     if not connection_string:
-        raise ValueError(
-            "Connection string is not set in the environment variables."
-        )
+        raise ValueError("Connection string is not set in the environment variables.")
 
-    client = IoTHubDeviceClient.create_from_connection_string(
-        connection_string
-    )
+    client = IoTHubDeviceClient.create_from_connection_string(connection_string)
 
     return client

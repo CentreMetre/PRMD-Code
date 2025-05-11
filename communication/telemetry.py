@@ -28,9 +28,7 @@ def send_telemetry_data(client: IoTHubDeviceClient, data: dict) -> None:
         json_data = json.dumps(data)
         client.send_message(json_data)
     except TypeError as e:
-        raise TypeError(
-            "Telemetry data must be a JSON-serializable object."
-        ) from e
+        raise TypeError("Telemetry data must be a JSON-serializable object.") from e
     except Exception as e:
         raise Exception(
             "An error occurred while sending telemetry data to Azure IoT Hub."

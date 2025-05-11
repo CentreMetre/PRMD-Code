@@ -5,9 +5,7 @@ from azure.iot.device import IoTHubDeviceClient
 from utils.file_io import read_file
 
 SESSIONS_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    "data",
-    "sessions"
+    os.path.dirname(os.path.dirname(__file__)), "data", "sessions"
 )
 
 

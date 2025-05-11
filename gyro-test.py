@@ -117,12 +117,14 @@ def initial_config():
     write_register(SENSOR_LOWER, CTRL_GYRO, GYRO_CONFIG)
     time.sleep(0.1)
     print("Config Complete:")
-    print(f"""
+    print(
+        f"""
     UPPER ACCEL: {read_register(SENSOR_UPPER, CTRL_ACCEL)}
     LOWER ACCEL: {read_register(SENSOR_LOWER, CTRL_ACCEL)}
     UPPER GYRO: {read_register(SENSOR_UPPER, CTRL_GYRO)}
     LOWER GYRO: {read_register(SENSOR_LOWER, CTRL_GYRO)}
-    """)
+    """
+    )
 
 
 def read_sensors_for_time_with_interval(seconds, interval):
@@ -151,20 +153,14 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
         print("time.time in loop: " + str(time.time()))
         # Read accelerometer data from SENSOR_UPPER
-        UPPER_ACCEL_X = read_sensor_axis(
-            SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
-        UPPER_ACCEL_Y = read_sensor_axis(
-            SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
-        UPPER_ACCEL_Z = read_sensor_axis(
-            SENSOR_UPPER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
+        UPPER_ACCEL_X = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
+        UPPER_ACCEL_Y = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
+        UPPER_ACCEL_Z = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
 
         # Read accelerometer data from SENSOR_LOWER
-        LOWER_ACCEL_X = read_sensor_axis(
-            SENSOR_LOWER, ACCEL_LOW_X, ACCEL_HIGH_X)
-        LOWER_ACCEL_Y = read_sensor_axis(
-            SENSOR_LOWER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
-        LOWER_ACCEL_Z = read_sensor_axis(
-            SENSOR_LOWER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
+        LOWER_ACCEL_X = read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_X, ACCEL_HIGH_X)
+        LOWER_ACCEL_Y = read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
+        LOWER_ACCEL_Z = read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
 
         # Read gyroscope data from SENSOR_UPPER
         UPPER_GYRO_X = read_sensor_axis(SENSOR_UPPER, GYRO_LOW_X, GYRO_HIGH_X)
@@ -184,18 +180,15 @@ def read_sensors_for_time_with_interval(seconds, interval):
             LAX: LOWER_ACCEL_X,  # lower_accel_x -> LAX
             LAY: LOWER_ACCEL_Y,  # lower_accel_y -> LAY
             LAZ: LOWER_ACCEL_Z,  # lower_accel_z -> LAZ
-
             UAX: UPPER_ACCEL_X,  # upper_accel_x -> UAX
             UAY: UPPER_ACCEL_Y,  # upper_accel_y -> UAY
             UAZ: UPPER_ACCEL_Z,  # upper_accel_z -> UAZ
-
             LGX: LOWER_GYRO_X,  # lower_gyro_x -> LGX
             LGY: LOWER_GYRO_Y,  # lower_gyro_y -> LGY
             LGZ: LOWER_GYRO_Z,  # lower_gyro_z -> LGZ
-
             UGX: UPPER_GYRO_X,  # upper_gyro_x -> UGX
             UGY: UPPER_GYRO_Y,  # upper_gyro_y -> UGY
-            UGZ: UPPER_GYRO_Z  # upper_gyro_z -> UGZ
+            UGZ: UPPER_GYRO_Z,  # upper_gyro_z -> UGZ
         }
 
         readings[current_time] = new_reading
@@ -223,7 +216,7 @@ def get_calibration_data():
 
 # def apply_calibration(calibration_data, final_reading):
 #     for reading in final_reading
-if __name__ == '__main__':
+if __name__ == "__main__":
     session_start = time.time()
     initial_config()
     calibration_data_global = get_calibration_data()

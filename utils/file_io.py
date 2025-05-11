@@ -16,7 +16,7 @@ def read_file(file_path: str) -> str:
         Exception: If any other error occurs while opening or reading the file.
     """
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             content = file.read()
         return content
     except FileNotFoundError as e:
@@ -40,7 +40,7 @@ def write_to_file_json(file_path: str, data: dict) -> None:
         Exception: If there is an error while writing to the file.
     """
     try:
-        with open(file_path, 'w') as file:
+        with open(file_path, "w") as file:
             json.dump(data, file)
     except Exception as e:
         raise Exception(
