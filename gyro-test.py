@@ -234,6 +234,8 @@ def read_sensors_for_time_with_interval(seconds, interval):
         print("Sleeping for ", interval)
         time.sleep(interval)
 
+    print(readings)
+
     return readings
 
 
