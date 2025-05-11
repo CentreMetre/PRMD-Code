@@ -1,3 +1,6 @@
+import settings
+
+
 class Session:
     """
     Represents a session of data collection from a specific sensor.
@@ -13,9 +16,9 @@ class Session:
     """
 
     def __init__(self, session_id: str, sensor_type: str, data_points: list[dict]):
-        self.session_id = session_id
         self.sensor_type = sensor_type
         self.data_points = data_points
+        self.session_id = self.generate_session_id(settings.DEVICE_ID)
 
     @classmethod
     def from_json(cls, json_data: dict) -> "Session":
@@ -45,6 +48,32 @@ class Session:
             sensor_type=sensor_type,
             data_points=data_points,
         )
+
+    def generate_session_id(self, device_id: str) -> str:
+        """
+        Generate a unique session ID based on the device ID and the earliest timestamp in the data points.
+
+        The session ID is a combination of the device ID and the earliest timestamp in the data points.
+        The timestamp is converted to a string and appended to the device ID.
+
+        Args:
+            device_id (str): The unique identifier for the device.
+
+        Returns:
+            str: The generated session ID.
+
+        Raises:
+            ValueError: If there are no data points available to generate the session ID.
+        """
+
+        if not self.data_points:
+            raise ValueError("No data points available to generate session ID.")
+
+        earliest_ts = min(dp["timestamp"] for dp in self.data_points)
+        ts_str = str(int(earliest_ts))
+
+        session_id = f"{device_id}_{ts_str}"
+        return session_id
 
     def get_session_id(self) -> str:
         """

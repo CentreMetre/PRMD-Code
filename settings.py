@@ -1,3 +1,13 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# .env files
+IOT_CONNECTION_STRING = os.getenv("IOT_CONNECTION_STRING")
+DEVICE_ID = os.getenv("DEVICE_ID")
+
+# Configuration settings
 POLLING_RATE = 1  # time in seconds between reads
 DEBUG = True
 
