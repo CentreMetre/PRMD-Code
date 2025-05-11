@@ -2,6 +2,7 @@ import datetime
 import os
 import json
 from models.session import Session
+from models.message import Message
 from settings import SESSION_DIR
 from azure.iot.device import IoTHubDeviceClient
 from utils.file_io import read_file
@@ -30,13 +31,15 @@ def upload_all_sessions(client: IoTHubDeviceClient) -> None:
             session = Session.from_json(json.loads(raw_data))
 
             for dp in session.get_all_datapoints():
-                message = {
-                    "timestamp": convert_unix_to_iso(dp["timestamp"]),
-                    "data": dp["data"],
-                }
-                client.send_message(message)
 
-            os.remove(file_path)  # remove the file after upload
+                timestamp = dp["timestamp"]
+                data = dp["data"]
+                msg = Message(data, session.get_session_id(), timestamp)
+
+                client.send_message(json.dumps(msg.to_dict()))
+
+            # os.remove(file_path)  # remove the file after upload
+            # TODO: Uncomment this line to remove the file after upload
 
         except Exception as e:
             raise Exception(
@@ -70,14 +73,24 @@ def run_upload(client: IoTHubDeviceClient) -> None:
         client.disconnect()
 
 
-def convert_unix_to_iso(unix_timestamp: int) -> str:
-    """
-    Converts a Unix timestamp to ISO 8601 format.
+def test_output():
 
-    Args:
-        unix_timestamp (int): The Unix timestamp to convert.
+    for filename in os.listdir(SESSION_DIR):
+        if not filename.endswith(".json"):
+            continue  # skip non-json files
 
-    Returns:
-        str: The ISO 8601 formatted date string.
-    """
-    return datetime.datetime.fromtimestamp(unix_timestamp).isoformat()
+        try:
+            file_path = os.path.join(SESSION_DIR, filename)
+            raw_data = read_file(file_path)
+            session = Session.from_json(json.loads(raw_data))
+
+            for dp in session.get_all_datapoints():
+                timestamp = dp["timestamp"]
+                data = dp["data"]
+                msg = Message(data, session.get_session_id(), timestamp)
+                print(json.dumps(msg.to_dict(), indent=4))
+
+        except Exception as e:
+            raise Exception(
+                f"An error occurred while uploading session file {filename} to Azure IoT Hub."
+            ) from e

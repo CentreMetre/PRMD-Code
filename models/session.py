@@ -70,7 +70,7 @@ class Session:
             raise ValueError("No data points available to generate session ID.")
 
         earliest_ts = min(dp["timestamp"] for dp in self.data_points)
-        ts_str = str(int(earliest_ts))
+        ts_str = str(int(float(earliest_ts)))
 
         session_id = f"{device_id}_{ts_str}"
         return session_id
