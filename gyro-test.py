@@ -45,8 +45,6 @@ ACCEL_CONFIG = 0x40
 CTRL_GYRO = 0x11
 GYRO_CONFIG = 0x42
 
-calibration_data_global = 0
-
 """
 Variable names for easier use of the key values for dicts.
 L = lower
@@ -70,6 +68,21 @@ UGX = "upper_gyro_x" # upper gyro x
 UGY = "upper_gyro_y"
 UGZ = "upper_gyro_z"
 
+
+sensor_names = [
+    "lower_accel_x",
+    "lower_accel_y",
+    "lower_accel_z",
+    "upper_accel_x",
+    "upper_accel_y",
+    "upper_accel_z",
+    "lower_gyro_x",
+    "lower_gyro_y",
+    "lower_gyro_z",
+    "upper_gyro_x",
+    "upper_gyro_y",
+    "upper_gyro_z"
+]
 
 def read_register(sensor_address, register):
     return I2C_BUS.read_byte_data(sensor_address, register)
@@ -150,6 +163,23 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
     while time.time() < end:
 
+        # sensor_readings = []
+        #
+        # sensor_readings.append(read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X))
+        # sensor_readings.append(read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y))
+        # sensor_readings.append(read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Z, ACCEL_HIGH_Z))
+        #
+        # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_X, ACCEL_HIGH_X))
+        # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_Y, ACCEL_HIGH_Y))
+        # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_Z, ACCEL_HIGH_Z))
+        #
+        # sensor_readings.append(read_sensor_axis(SENSOR_UPPER, GYRO_LOW_X, GYRO_HIGH_X))
+        # sensor_readings.append(read_sensor_axis(SENSOR_UPPER, GYRO_LOW_Y, GYRO_HIGH_Y))
+        # sensor_readings.append(read_sensor_axis(SENSOR_UPPER, GYRO_LOW_Z, GYRO_HIGH_Z))
+        #
+        # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, GYRO_LOW_X, GYRO_HIGH_X))
+        # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, GYRO_LOW_Y, GYRO_HIGH_Y))
+        # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, GYRO_LOW_Z, GYRO_HIGH_Z))
 
         print("time.time in loop: " + str(time.time()))
         # Read accelerometer data from SENSOR_UPPER
@@ -216,7 +246,7 @@ def get_calibration_data():
     return calibration_data
 
 
-def mean_calibration_data(calibration_data):
+def calculate_mean_calibration_data(calibration_data):
     mean_calibration_data = {}
 
     for name in sensor_names:
@@ -233,19 +263,15 @@ def mean_calibration_data(calibration_data):
 
 
 
-def apply_calibration(calibration_data, final_reading):
-    for name in sensor_names:
-        values = []
-        for timestamp in calibration_data:
-            values.append(timestamp[name])
+# def apply_calibration(mean_calibration_data, final_reading):
 
-        mean_calibration_data[name] = np.mean(values)
 
 if __name__ == '__main__':
     session_start = time.time()
     initial_config()
-    calibration_data_global = get_calibration_data()
-    print("")
+    calibration_data = get_calibration_data()
+    mean_calibration_data = calculate_mean_calibration_data(calibration_data)
+    print(mean_calibration_data)
     print("")
     print("")
     print("")
