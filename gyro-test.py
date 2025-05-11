@@ -258,6 +258,10 @@ def calculate_mean_calibration_data(calibration_data):
         mean_calibration_data[name] = 0
         summed_calibration_data[name] = 0
 
+    print("Names in dicts, summed, mean :")
+    print(summed_calibration_data)
+    print(mean_calibration_data)
+
     for name in summed_calibration_data:
         for timestamp in calibration_data:
             summed_calibration_data[name] =+ timestamp[name]
