@@ -6,16 +6,15 @@ Used to convert a session of data into a json file for uploading to the cloud.
 """
 
 
-def convert_reading_list_to_json(readings, sensor_type: sensor_enum):
+def write_to_json_file(readings, file_name):
     """
 
     Args:
+        file_name:
         readings: The reading data
-        sensor_type: The type of sensor used, as a sensor_enum
 
     Returns:
 
     """
-    readings["sensor_type"] = sensor_type.value
-    json_readings = json.dumps(readings, indent=4)
-    return json_readings
+    with open(file_name, 'w') as f:
+        json.dump(readings, f, indent=4)

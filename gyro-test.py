@@ -228,12 +228,12 @@ if __name__ == '__main__':
     print("")
     print("")
     readings = read_sensors_for_time_with_interval(1, 0.25)
-    print("Done")
-    created_json = pjson.convert_reading_list_to_json(readings, sensor_enum.SensorType.GYRO_ACCEL)
+    print("Done reading")
+
     file_name = str(session_start) + ".json"
-    full_path = "/home/pi/prmd/data/sessions/" + file_name
-    with open(file_name, "w") as outfile:
-        json.dump(created_json, outfile, indent=4)
+    pjson.write_to_json_file(readings, file_name)
+
+    print("Done writing to file")
 
 
 
