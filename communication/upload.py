@@ -1,9 +1,8 @@
 import datetime
 import os
 import json
-from communication.session import Session
+from models.session import Session
 from settings import SESSION_DIR
-from communication.client import get_iot_hub_client
 from azure.iot.device import IoTHubDeviceClient
 from utils.file_io import read_file
 
