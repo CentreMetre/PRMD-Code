@@ -20,7 +20,7 @@ def write_to_json_file(readings, file_name, dir_path):
 
     """
 
-    full_path = dir_path + "/" + file_name + ".json"
+    full_path = os.path.join(dir_path, file_name + "json")
 
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
 

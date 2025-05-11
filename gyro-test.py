@@ -231,7 +231,7 @@ if __name__ == '__main__':
     print("Done reading")
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
-    file_name = str(session_start) + ".json"
+    file_name = str(session_start)
     pjson.write_to_json_file(readings, file_name, "/home/pi/prmd/data/sessions")
 
     print("Done writing to file")
