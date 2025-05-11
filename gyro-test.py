@@ -254,6 +254,7 @@ def calculate_mean_calibration_data(calibration_data):
     summed_calibration_data = {}
     mean_calibration_data = {}
 
+    # setting keys in dicts
     for name in sensor_names:
         mean_calibration_data[name] = 0
         summed_calibration_data[name] = 0
@@ -262,9 +263,10 @@ def calculate_mean_calibration_data(calibration_data):
     print(summed_calibration_data)
     print(mean_calibration_data)
 
+    # add the calibration data gathered to then divide by count
     for name in summed_calibration_data:
         for timestamp in calibration_data:
-            summed_calibration_data[name] =+ timestamp[name]
+            summed_calibration_data[name] =+ calibration_data[timestamp][name]
 
     print("\n\n\n Summed calibration data:")
     print(summed_calibration_data)
