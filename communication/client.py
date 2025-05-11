@@ -1,33 +1,17 @@
-import os
 from azure.iot.device import IoTHubDeviceClient
-from dotenv import load_dotenv
 
 
-load_dotenv()
-
-
-def get_iot_hub_client() -> IoTHubDeviceClient:
+def get_iot_hub_client(connection_string: str) -> IoTHubDeviceClient:
     """
-    Creates and returns an instance of IoTHubDeviceClient using the Azure IoT Hub connection string
-    specified in the environment variables.
+    Create an IoTHubDeviceClient instance.
 
-    This function loads the connection string from the environment variable 'AZURE_IOT_HUB_CONNECTION_STRING'.
-    If the connection string is not set, it raises a ValueError. The returned IoTHubDeviceClient instance
-    can be used to send messages to or receive messages from Azure IoT Hub.
+    This function creates an instance of the IoTHubDeviceClient using the provided connection string.
+    It is used to establish a connection to Azure IoT Hub for sending messages.
+
+    Args:
+        connection_string (str): The connection string for the Azure IoT Hub.
 
     Returns:
-        IoTHubDeviceClient: An authenticated client for communicating with Azure IoT Hub.
-
-    Raises:
-        ValueError: If the 'AZURE_IOT_HUB_CONNECTION_STRING' environment variable is not set.
+        IoTHubDeviceClient: An instance of the IoTHubDeviceClient.
     """
-
-    # load variable from .env
-    connection_string = os.getenv("AZURE_IOT_HUB_CONNECTION_STRING")
-
-    if not connection_string:
-        raise ValueError("Connection string is not set in the environment variables.")
-
-    client = IoTHubDeviceClient.create_from_connection_string(connection_string)
-
-    return client
+    return IoTHubDeviceClient.create_from_connection_string(connection_string)
