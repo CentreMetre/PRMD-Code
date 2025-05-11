@@ -2,6 +2,7 @@ import time
 import smbus2
 import env
 import utils.prmd_json as pjson
+import json
 import sensor_enum
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
@@ -186,6 +187,7 @@ def get_calibration_data():
 
 
 if __name__ == '__main__':
+    session_start = time.time()
     initial_config()
     get_calibration_data()
     print("")
@@ -227,5 +229,11 @@ if __name__ == '__main__':
     print("")
     readings = read_sensors_for_time_with_interval(1, 0.25)
     print("Done")
-    print(pjson.convert_reading_list_to_json(readings, sensor_enum.SensorType.GYRO_ACCEL))
+    created_json = pjson.convert_reading_list_to_json(readings, sensor_enum.SensorType.GYRO_ACCEL)
+    file_name = str(session_start) + ".json"
+    full_path = env.session_output_dir + file_name
+    with open(file_name, "w") as outfile:
+        json.dump(created_json, outfile, indent=4)
+
+
 
