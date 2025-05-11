@@ -1,8 +1,7 @@
 import time
 import smbus2
-import env
-import utils.prmd_json as pjson
-import json
+import settings
+import utils.file_io as pjson
 import sensor_enum
 
 I2C_BUS = smbus2.SMBus(1)  # The I2C bus
@@ -54,19 +53,19 @@ A = accelerometer
 G = gyro
 X,Y,Z = axes
 """
-LAX = "lower_accel_x" # lower accel x
+LAX = "lower_accel_x"  # lower accel x
 LAY = "lower_accel_y"
 LAZ = "lower_accel_z"
 
-UAX = "upper_accel_x" # upper accel x
+UAX = "upper_accel_x"  # upper accel x
 UAY = "upper_accel_y"
 UAZ = "upper_accel_z"
 
-LGX = "lower_gyro_x" # lower gyro x
+LGX = "lower_gyro_x"  # lower gyro x
 LGY = "lower_gyro_y"
 LGZ = "lower_gyro_z"
 
-UGX = "upper_gyro_x" # upper gyro x
+UGX = "upper_gyro_x"  # upper gyro x
 UGY = "upper_gyro_y"
 UGZ = "upper_gyro_z"
 
@@ -104,7 +103,6 @@ def read_sensor_axis(sensor_address, register_low, register_high):
 
 
 def initial_config():
-
     """
 
     Returns:Nothing
@@ -125,6 +123,7 @@ def initial_config():
     UPPER GYRO: {read_register(SENSOR_UPPER, CTRL_GYRO)}
     LOWER GYRO: {read_register(SENSOR_LOWER, CTRL_GYRO)}
     """)
+
 
 def read_sensors_for_time_with_interval(seconds, interval):
     """
@@ -150,17 +149,22 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
     while time.time() < end:
 
-
         print("time.time in loop: " + str(time.time()))
         # Read accelerometer data from SENSOR_UPPER
-        UPPER_ACCEL_X = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
-        UPPER_ACCEL_Y = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
-        UPPER_ACCEL_Z = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
+        UPPER_ACCEL_X = read_sensor_axis(
+            SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
+        UPPER_ACCEL_Y = read_sensor_axis(
+            SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
+        UPPER_ACCEL_Z = read_sensor_axis(
+            SENSOR_UPPER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
 
         # Read accelerometer data from SENSOR_LOWER
-        LOWER_ACCEL_X = read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_X, ACCEL_HIGH_X)
-        LOWER_ACCEL_Y = read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
-        LOWER_ACCEL_Z = read_sensor_axis(SENSOR_LOWER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
+        LOWER_ACCEL_X = read_sensor_axis(
+            SENSOR_LOWER, ACCEL_LOW_X, ACCEL_HIGH_X)
+        LOWER_ACCEL_Y = read_sensor_axis(
+            SENSOR_LOWER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
+        LOWER_ACCEL_Z = read_sensor_axis(
+            SENSOR_LOWER, ACCEL_LOW_Z, ACCEL_HIGH_Z)
 
         # Read gyroscope data from SENSOR_UPPER
         UPPER_GYRO_X = read_sensor_axis(SENSOR_UPPER, GYRO_LOW_X, GYRO_HIGH_X)
@@ -174,7 +178,7 @@ def read_sensors_for_time_with_interval(seconds, interval):
 
         current_time = time.time()
 
-        new_reading = {} # reset reading
+        new_reading = {}  # reset reading
 
         new_reading = {
             LAX: LOWER_ACCEL_X,  # lower_accel_x -> LAX
@@ -185,21 +189,18 @@ def read_sensors_for_time_with_interval(seconds, interval):
             UAY: UPPER_ACCEL_Y,  # upper_accel_y -> UAY
             UAZ: UPPER_ACCEL_Z,  # upper_accel_z -> UAZ
 
-            LGX: LOWER_GYRO_X, # lower_gyro_x -> LGX
-            LGY: LOWER_GYRO_Y, # lower_gyro_y -> LGY
-            LGZ: LOWER_GYRO_Z, # lower_gyro_z -> LGZ
+            LGX: LOWER_GYRO_X,  # lower_gyro_x -> LGX
+            LGY: LOWER_GYRO_Y,  # lower_gyro_y -> LGY
+            LGZ: LOWER_GYRO_Z,  # lower_gyro_z -> LGZ
 
-            UGX: UPPER_GYRO_X, # upper_gyro_x -> UGX
-            UGY: UPPER_GYRO_Y, # upper_gyro_y -> UGY
+            UGX: UPPER_GYRO_X,  # upper_gyro_x -> UGX
+            UGY: UPPER_GYRO_Y,  # upper_gyro_y -> UGY
             UGZ: UPPER_GYRO_Z  # upper_gyro_z -> UGZ
         }
-
 
         readings[current_time] = new_reading
 
         print(readings[current_time])
-
-
 
         print("Sleeping for ", interval)
         time.sleep(interval)
@@ -220,10 +221,8 @@ def get_calibration_data():
 #     for time in calibration_data:
 
 
-
 # def apply_calibration(calibration_data, final_reading):
 #     for reading in final_reading
-
 if __name__ == '__main__':
     session_start = time.time()
     initial_config()
@@ -270,9 +269,6 @@ if __name__ == '__main__':
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
     file_name = str(session_start)
-    pjson.write_to_json_file(readings, file_name, env.session_output_dir )
+    pjson.write_to_file_json(readings, file_name, settings.SESSION_DIR)
 
     print("Done writing to file")
-
-
-

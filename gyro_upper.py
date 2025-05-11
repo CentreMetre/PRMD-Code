@@ -1,8 +1,8 @@
 import smbus
 import time
 
-I2C_ADDR = 0x6A # Upper sensor
-bus = smbus.SMBus(1) # i2c bus 1
+I2C_ADDR = 0x6A  # Upper sensor
+bus = smbus.SMBus(1)  # i2c bus 1
 
 # register addresses
 WHO_AM_I = 0x0F
@@ -40,6 +40,7 @@ def read_data(register):
         value -= 65536  # Convert to signed value
     return value
 
+
 calibration_readings = {
     'accel': {'X': [], 'Y': [], 'Z': []},
     'gyro': {'X': [], 'Y': [], 'Z': []}
@@ -70,7 +71,6 @@ def calibrate_final_data(data):
     gyro_bias_X_mean = calculate_mean(calibration_readings['gyro']['X'])
     gyro_bias_Y_mean = calculate_mean(calibration_readings['gyro']['Y'])
     gyro_bias_Z_mean = calculate_mean(calibration_readings['gyro']['Z'])
-
 
 
 def get_calibration_data():
@@ -113,9 +113,10 @@ def read_sensors_for_time(seconds):
         if time.time() >= end:
             return readings
 
+
 def calculate_mean(list):
     length = 0
     total_sum = 0
     for i in range(len(list)):
-        length =+ 1
+        length = + 1
         total_sum = total_sum + list[i]
