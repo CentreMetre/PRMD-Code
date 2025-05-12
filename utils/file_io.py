@@ -37,9 +37,13 @@ def write_to_json_file(file_path: str, data: dict) -> None:
 
     """
 
-    full_path = os.path.join(dir_path, file_name + ".json")
-
-    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+    try:
+        with open(file_path, "w") as file:
+            json.dump(data, file)
+    except Exception as e:
+        raise Exception(
+            f"An error occurred while writing to the file {file_path}. Session data may not be saved."
+        ) from e
 
     print(full_path)
 
