@@ -10,16 +10,24 @@ lgpio.gpio_claim_input(chip, DT)  # Claim the data pin
 lgpio.gpio_claim_output(chip, SCK)  # Claim the clock pin
 
 # Start hx711
-hx = HX711(dout_pin=DT, pd_sck_pin=SCK)
+# hx = HX711(dout_pin=DT, pd_sck_pin=SCK)
 
 def read_sensor():
-    def read_weight():
-        try:
-            print("Reading weight...")
-            weight = hx._read(20)  # Get the average of 20 readings
-            print(f"Weight: {weight} grams")
-        except Exception as e:
-            print(f"Error reading data: {e}")
+    count = 0
+    value = 0
+    while count < 24:
+        # Generate clock pulse (SCK pin goes HIGH and then LOW)
+        lgpio.gpio_write(chip, SCK, 1)  # Set clock HIGH
+        time.sleep(0.00001)  # Short delay
+        lgpio.gpio_write(chip, SCK, 0)  # Set clock LOW
+        time.sleep(0.00001)  # Short delay
+
+        # Read the data bit from DT pin
+        if lgpio.gpio_read(chip, DT) == 1:
+            value |= 1 << (23 - count)  # Set bit in the correct position
+
+        count += 1
+    return value
 
 if __name__ == "__main__":
     print(read_sensor())
