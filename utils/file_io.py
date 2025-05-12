@@ -26,13 +26,12 @@ def read_file(file_path: str) -> str:
         raise e
 
 
-def write_to_json_file(readings, file_name, dir_path):
+def write_to_json_file(file_path: str, data: dict) -> None:
     """
 
     Args:
-        dir_path: the path to the directory to write the json file.
-        file_name: the name of the file to be written.
-        readings: The reading data.
+        file_path: the full path, including file name, path to the [;ace] to write the json file.
+        data: The reading data.
 
     Returns:
 
