@@ -30,4 +30,5 @@ def read_sensor():
     return value
 
 if __name__ == "__main__":
-    print(read_sensor())
+    while True:
+        print(read_sensor())
