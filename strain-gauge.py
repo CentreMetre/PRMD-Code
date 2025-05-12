@@ -5,7 +5,7 @@ from hx711 import HX711  # Assuming you're using a library for HX711
 DT = 5  # Logical GPIO pin 5 for DT (physical pin 29)
 SCK = 6  # Logical GPIO pin 6 for SCK (physical pin 31)
 
-pi = pigpio.pi()
+pi = pigpio.pi('localhost', 8888)
 
 if not pi.connected:
     print("Pi not connected")
