@@ -1,19 +1,19 @@
 import time
-import RPi.GPIO as GPIO
-from hx711 import HX711
-
-GPIO.setmode(GPIO.BCM)  # Set to BCM for logical GPIO pin mode (must be done before starting hx711)
+from gpiozero import OutputDevice, InputDevice
+from hx711 import HX711  # Assuming you're using a library for HX711
 
 DT = 5  # Logical GPIO pin 5 for DT (physical pin 29)
-SCK = 6  # Logical GPIO pin 6 for DT (physical pin 31)
+SCK = 6  # Logical GPIO pin 6 for SCK (physical pin 31)
 
-hx = HX711(dout_pin=DT, pd_sck_pin=SCK) # Initialise the HX711 with the pins needed
+# Initialise gpiozero Input and Output pins
+dt_pin = InputDevice(DT)  # Data pin as input
+sck_pin = OutputDevice(SCK)  # Clock pin as output
 
-def read_sensor_for_time_with_interval(time: int, interval: int):
-    print("TO IMPLEMENT")
+# Initialize HX711 with gpiozero pins
+hx = HX711(dout_pin=DT, pd_sck_pin=SCK)
 
 def read_sensor():
-    weight = hx.get_weight(5)
+    weight = hx.get_weight(5)  # Get 5 readings
     print(f"WEIGHT: {weight}")
     return weight
 
