@@ -1,5 +1,5 @@
+import os
 import time
-import numpy as np
 import smbus2
 import settings
 import utils.file_io as pjson
@@ -293,58 +293,27 @@ if __name__ == '__main__':
     session_start = time.time()
     initial_config()
     calibration_data = get_calibration_data()
+
+    print("\n\n\n GATHERED CALIBRATION DATA\n\n\n")
+
     mean_calibration_data = calculate_mean_calibration_data(calibration_data)
     print("Mean calibration data:")
     print(mean_calibration_data)
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("GATHERED CALIBRATION DATA")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
-    print("")
     readings = read_sensors_for_time_with_interval(1, 0.25)
     print("Done reading")
 
-    print("Uncalibrated data:")
+    print("\n\n\nUncalibrated data:")
     print(readings)
 
     calibrated_readings = apply_calibration(mean_calibration_data, readings)
-    print("\n\nCalibrated data:")
+    print("\n\n\nCalibrated data:")
     print(calibrated_readings)
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
-    file_name = str(session_start)
-    pjson.write_to_json_file(readings, file_name, settings.SESSION_DIR)
+
+    file_name = f"{session_start}.json"
+    path_to_write = os.path.join(os.getcwd(), settings.SESSION_DIR, file_name)
+    pjson.write_to_json_file(path_to_write, readings)
 
     print("Done writing to file")
 
