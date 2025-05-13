@@ -1,0 +1,94 @@
+[
+    {
+        "lower_accel_x": 15800,
+        "lower_accel_y": -5600,
+        "lower_accel_z": 300,
+        "upper_accel_x": 13300,
+        "upper_accel_y": -3500,
+        "upper_accel_z": 9700,
+        "lower_gyro_x": 100,
+        "lower_gyro_y": 105,
+        "lower_gyro_z": -120,
+        "upper_gyro_x": -100,
+        "upper_gyro_y": 30,
+        "upper_gyro_z": 20,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:19.675103",
+        "sensor_type": "gyro_accel"
+    },
+    {
+        "data": -2500,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:19.675103",
+        "sensor_type": "strain_gauge"
+    },
+    {
+        "lower_accel_x": 15790,
+        "lower_accel_y": -5595,
+        "lower_accel_z": 320,
+        "upper_accel_x": 13310,
+        "upper_accel_y": -3480,
+        "upper_accel_z": 9705,
+        "lower_gyro_x": 98,
+        "lower_gyro_y": 106,
+        "lower_gyro_z": -110,
+        "upper_gyro_x": -90,
+        "upper_gyro_y": 35,
+        "upper_gyro_z": 25,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:19.935436",
+        "sensor_type": "gyro_accel"
+    },
+    {
+        "data": -2510,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:19.935436",
+        "sensor_type": "strain_gauge"
+    },
+    {
+        "lower_accel_x": 15770,
+        "lower_accel_y": -5590,
+        "lower_accel_z": 340,
+        "upper_accel_x": 13320,
+        "upper_accel_y": -3460,
+        "upper_accel_z": 9710,
+        "lower_gyro_x": 96,
+        "lower_gyro_y": 104,
+        "lower_gyro_z": -100,
+        "upper_gyro_x": -80,
+        "upper_gyro_y": 40,
+        "upper_gyro_z": 30,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:20.195783",
+        "sensor_type": "gyro_accel"
+    },
+    {
+        "data": -2525,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:20.195783",
+        "sensor_type": "strain_gauge"
+    },
+    {
+        "lower_accel_x": 15760,
+        "lower_accel_y": -5585,
+        "lower_accel_z": 360,
+        "upper_accel_x": 13330,
+        "upper_accel_y": -3440,
+        "upper_accel_z": 9715,
+        "lower_gyro_x": 95,
+        "lower_gyro_y": 102,
+        "lower_gyro_z": -90,
+        "upper_gyro_x": -70,
+        "upper_gyro_y": 45,
+        "upper_gyro_z": 35,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:20.456139",
+        "sensor_type": "gyro_accel"
+    },
+    {
+        "data": -2535,
+        "SessionID": "dev1234_1746924259",
+        "timestamp": "2025-05-11T01:44:20.456139",
+        "sensor_type": "strain_gauge"
+    }
+]

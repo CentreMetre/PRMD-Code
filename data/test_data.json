@@ -1,0 +1,17 @@
+{
+    "lower_accel_x": 15800,
+    "lower_accel_y": -5600,
+    "lower_accel_z": 300,
+    "upper_accel_x": 13300,
+    "upper_accel_y": -3500,
+    "upper_accel_z": 9700,
+    "lower_gyro_x": 100,
+    "lower_gyro_y": 105,
+    "lower_gyro_z": -120,
+    "upper_gyro_x": -100,
+    "upper_gyro_y": 30,
+    "upper_gyro_z": 20,
+    "SessionID": "dev1234_1746924259",
+    "timestamp": "2025-05-11T01:44:19.675103",
+    "sensor_type": "gyro_accel"
+}
