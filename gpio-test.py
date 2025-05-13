@@ -1,13 +1,14 @@
 import lgpio
 import time
 
-DT_PIN = 5  # Data pin DOUT
-SCK_PIN = 27  # clock pin PD_SCK
+# Define GPIO pins (BCM numbering)
+DT_PIN = 5     # HX711 DOUT
+SCK_PIN = 27    # HX711 SCK
 
-# open gpio chip
+# Open GPIO chip
 h = lgpio.gpiochip_open(0)
 
-# set pin directions
+# Set pin directions
 lgpio.gpio_claim_input(h, DT_PIN)
 lgpio.gpio_claim_output(h, SCK_PIN)
 
@@ -18,17 +19,17 @@ def read_hx711():
     while lgpio.gpio_read(h, DT_PIN):
         pass
 
-    # Read 24 bits of data
+    # Read 24 bits
     for _ in range(24):
         lgpio.gpio_write(h, SCK_PIN, 1)
-        time.sleep(0.000001)  # 1 µs
+        time.sleep(0.000001)
         count = count << 1
         lgpio.gpio_write(h, SCK_PIN, 0)
         time.sleep(0.000001)
         if lgpio.gpio_read(h, DT_PIN):
             count += 1
 
-    # Set gain (1 more clock pulse)
+    # One extra clock to set gain
     lgpio.gpio_write(h, SCK_PIN, 1)
     time.sleep(0.000001)
     lgpio.gpio_write(h, SCK_PIN, 0)
@@ -36,18 +37,21 @@ def read_hx711():
 
     # Convert to signed int
     if count & 0x800000:
-        count |= ~0xffffff  # Two's complement for 24-bit signed value
+        count |= ~0xffffff
 
     return count
 
-try:
-    while True:
-        val = read_hx711()
-        print(f'Reading: {val}')
-        time.sleep(0.5)
+# Calibration variables
+OFFSET = 0         # This will be set as tare value
+SCALE = 1          # This will be updated during calibration
 
-except KeyboardInterrupt:
-    print("Exiting...")
+def get_weight_grams():
+    raw = read_hx711()
+    adjusted = raw - OFFSET
+    grams = adjusted / SCALE
+    return grams
 
-finally:
-    lgpio.gpiochip_close(h)
+def calibrate():
+    global OFFSET, SCALE
+
+    input("Make sure the scale is empty, then press Enter to tare...")
