@@ -5,18 +5,17 @@ class Session:
     """
     Represents a session of data collection from a specific sensor.
 
-    Each session is identified by a unique session ID and contains data points collected from the sensor.
-    The session also includes the type of sensor from which the data was collected.
-    The data points are stored as a list of dictionaries, where each dictionary contains a timestamp and the corresponding data.
+    This class is responsible for managing the session ID and the data points collected during the session.
+    It provides methods to create a session from JSON data, generate a unique session ID, and retrieve session information.
+    The session ID is generated based on the device ID and the earliest timestamp in the data points.
+    The session data is stored as a list of dictionaries, each containing a timestamp and the corresponding data.
 
     Attributes:
         session_id (str): The unique identifier for the session.
-        sensor_type (str): The type of sensor from which the data was collected.
         data_points (list[dict]): A list of dictionaries containing the timestamp and data collected during the session.
     """
 
-    def __init__(self, session_id: str, sensor_type: str, data_points: list[dict]):
-        self.sensor_type = sensor_type
+    def __init__(self, session_id: str, data_points: list[dict]):
         self.data_points = data_points
         self.session_id = self.generate_session_id(settings.DEVICE_ID)
 
@@ -25,9 +24,8 @@ class Session:
         """
         Create a Session instance from JSON data.
 
-        This method extracts the session ID, sensor type, and data points from the provided JSON data.
-        It assumes that the JSON data contains a key "sensor_type" and a list of data points.
-        The session ID is extracted from the JSON data, and if not present, defaults to "unknown".
+        This method takes a JSON object containing session information and converts it into a Session instance.
+        The JSON data should contain a session ID and a list of data points, each with a timestamp and sensor type.
 
         Args:
             json_data (dict): The JSON data containing session information.
@@ -35,18 +33,19 @@ class Session:
         Returns:
             Session: An instance of the Session class initialized with the provided JSON data.
         """
-        sensor_type = json_data.get("sensor_type", "unknown")
-
         data_points = []
-
-        for timestamp, data in json_data.items():
-            if timestamp != "sensor_type":
-                data_points.append({"timestamp": timestamp, "data": data})
+        for sensor_type, readings in json_data.items():
+            for timestamp, data in readings.items():
+                data_points.append(
+                    {
+                        "timestamp": timestamp,
+                        "sensor_type": sensor_type,
+                        "data": data if isinstance(data, dict) else {"data": data},
+                    }
+                )
 
         return cls(
-            session_id=json_data.get("session_id", "unknown"),
-            sensor_type=sensor_type,
-            data_points=data_points,
+            session_id=json_data.get("session_id", "unknown"), data_points=data_points
         )
 
     def generate_session_id(self, device_id: str) -> str:
@@ -92,3 +91,12 @@ class Session:
             list: A list of all data points in the session.
         """
         return self.data_points
+
+    def to_string(self) -> str:
+        """
+        Convert the session data to a string representation.
+
+        Returns:
+            str: A string representation of the session data.
+        """
+        return f"Session ID: {self.session_id}, Data Points: {self.data_points}"

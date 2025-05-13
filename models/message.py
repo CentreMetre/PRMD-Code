@@ -9,9 +9,16 @@ class Message:
     Converts raw sensor data into a structured dictionary suitable for communication.
     """
 
-    def __init__(self, raw_data: Dict[str, int], session_id: str, timestamp: str):
+    def __init__(
+        self,
+        raw_data: Dict[str, int],
+        session_id: str,
+        timestamp: str,
+        sensor_type: str = "unknown",
+    ):
         self.raw_data = raw_data
         self.session_id = session_id
+        self.sensor_type = sensor_type
         self.timestamp = self._format_timestamp(timestamp)
 
     def _format_timestamp(self, ts: str) -> str:
@@ -49,6 +56,7 @@ class Message:
 
         formatted["SessionID"] = self.session_id
         formatted["Timestamp"] = self.timestamp
+        formatted["SensorType"] = self.sensor_type
 
         return formatted
 
