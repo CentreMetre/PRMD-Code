@@ -34,7 +34,9 @@ def upload_all_sessions(client: IoTHubDeviceClient) -> None:
 
                 timestamp = dp["timestamp"]
                 data = dp["data"]
-                msg = Message(data, session.get_session_id(), timestamp)
+                sensor_type = dp["sensor_type"]
+
+                msg = Message(data, session.get_session_id(), timestamp, sensor_type)
 
                 client.send_message(json.dumps(msg.to_dict()))
 
@@ -85,9 +87,12 @@ def test_output():
             session = Session.from_json(json.loads(raw_data))
 
             for dp in session.get_all_datapoints():
+
                 timestamp = dp["timestamp"]
                 data = dp["data"]
-                msg = Message(data, session.get_session_id(), timestamp)
+                sensor_type = dp["sensor_type"]
+
+                msg = Message(data, session.get_session_id(), timestamp, sensor_type)
                 print(json.dumps(msg.to_dict(), indent=4))
 
         except Exception as e:
