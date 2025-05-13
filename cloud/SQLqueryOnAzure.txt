@@ -1,19 +1,32 @@
 SELECT
-    gyro_upper_X,
-    gyro_upper_Y,
-    gyro_upper_Z,
-    gyro_Lower_X,
-    gyro_Lower_Y,
-    gyro_Lower_Z,
-    accelerometer_Upper_X,
-    accelerometer_Upper_Y,
-    accelerometer_Upper_Z,
-    accelerometer_Lower_X,
-    accelerometer_Lower_Y,
-    accelerometer_Lower_Z,
-    SessionID,
+    upper_gyro_x,
+    upper_gyro_y,
+    upper_gyro_z,
+    lower_gyro_x,
+    lower_gyro_y,
+    lower_gyro_z,
+    upper_accel_x,
+    upper_accel_y,
+    upper_accel_z,
+    lower_accel_x,
+    lower_accel_y,
+    lower_accel_z,
+    CAST(SessionID AS NVARCHAR(MAX)) AS SessionID,
     CAST(Timestamp AS DATETIME) AS Timestamp
 INTO
     SqlOutput
 FROM
     IoTHubInput
+WHERE
+    SensorType = 'gryo_accel'
+
+SELECT
+    data,
+    CAST(SessionID AS NVARCHAR(MAX)) AS SessionID,
+    CAST(Timestamp AS DATETIME) AS Timestamp
+INTO
+    StrainGaugeOutput
+FROM
+    IoTHubInput
+WHERE
+    SensorType = 'strain_gauge'
