@@ -1,3 +1,6 @@
+import time
+
+import run_gyro_accel
 import settings
 from communication.client import get_iot_hub_client
 from communication.upload import run_upload
@@ -14,6 +17,9 @@ def main():
     # or a separate process that checks if we're connected to the internet
     # and if so, it should run the upload function every 5 minutes.
 
+def ask_sensor_type():
+    print("Please choose a sensor type:")
 
 if __name__ == "__main__":
-    main()
+    session_start = time.time()
+    gyro_accel_data = run_gyro_accel.run_session()

@@ -288,8 +288,7 @@ def apply_calibration(mean_calibration_data, final_readings):
 
     return calibrated_readings
 
-
-if __name__ == '__main__':
+def run_session():
     session_start = time.time()
     initial_config()
     calibration_data = get_calibration_data()
@@ -311,11 +310,15 @@ if __name__ == '__main__':
 
     readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
 
-    file_name = f"{session_start}.json"
-    path_to_write = os.path.join(os.getcwd(), settings.SESSION_DIR, file_name)
-    pjson.write_to_json_file(path_to_write, readings)
+    return readings
+    # file_name = f"{session_start}.json"
+    # path_to_write = os.path.join(os.getcwd(), settings.SESSION_DIR, file_name)
+    # pjson.write_to_json_file(path_to_write, readings)
 
-    print("Done writing to file")
+    #print("Done writing to file")
+
+if __name__ == '__main__':
+    run_session()
 
 
 
