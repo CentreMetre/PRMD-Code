@@ -50,8 +50,6 @@ def read_sensor_for_time(seconds):
 
     return readings
 
-
-
 def run_session():
     readings = read_sensor_for_time(5)
     return readings
