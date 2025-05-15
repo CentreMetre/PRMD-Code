@@ -54,18 +54,29 @@ def calibrate():
     global OFFSET, SCALE
 
     # Step 1: Tare the scale (set the offset)
-    input("Place nothing on the scale, then press Enter to tare...")
-    OFFSET = average_readings(10)  # Average of 10 readings for stability
-    print(f"Tare set: {OFFSET}")
+    input("Place NOTHING on the scale, then press Enter to tare...")
+    OFFSET = average_readings(10)
+    print(f"Tare set (no load): {OFFSET}")
 
-    # Step 2: Place the 500ml bottle of water (500g)
-    input("Place the 500ml bottle of water (500g) on the scale, then press Enter...")
-    raw_with_water = average_readings(10)  # Get the average raw value with the bottle of water on the scale
+    # Step 2: Add known weight
+    input("Now place the 500g weight on the scale, then press Enter...")
+    raw_with_weight = average_readings(10)
+    print(f"Reading with 500g: {raw_with_weight}")
 
-    # Step 3: Calculate the scale factor
-    known_weight_grams = 500  # 500ml bottle of water = 500g
-    SCALE = (raw_with_water - OFFSET) / known_weight_grams  # Calculate scale factor
-    print(f"Calibration complete. SCALE factor: {SCALE:.6f}")
+    # Step 3: Compute SCALE factor
+    delta = raw_with_weight - OFFSET
+    if delta == 0:
+        print("Error: No change in weight detected. Check your load cell connection.")
+        SCALE = 1
+    else:
+        SCALE = delta / 500.0
+        print(f"Calibration complete. SCALE factor: {SCALE:.6f}")
+
+    # Step 4: OPTIONAL — Re-tare now that you've removed the weight
+    input("Now REMOVE the 500g weight, then press Enter to finalise tare...")
+    OFFSET = average_readings(10)
+    print(f"Final tare offset set: {OFFSET}")
+
 
 # Get the weight based on the current scale factor
 def get_weight():
