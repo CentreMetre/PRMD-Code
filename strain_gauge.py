@@ -13,6 +13,8 @@ lgpio.gpio_claim_output(chip, SCK)  # Claim the clock pin
 
 def read_sensor_for_time(seconds):
     readings = {}
+    print(f"The sensor will read for {seconds}")
+    input("Press enter to start")
     end_time = time.time() + seconds
 
     while time.time() < end_time:
