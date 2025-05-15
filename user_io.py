@@ -5,10 +5,9 @@ from utils import file_io
 import gyro_accel
 import strain_gauge
 
-gyro_accel_measured = False
-strain_gauge_measured = False
 
 def ask_sensor_type():
+    print("in ask sensor type")
     is_answer_valid = False
     choice = -1
 
@@ -37,15 +36,18 @@ def input_valid(valid_inputs, choice):
         return False
     return True
 
+gyro_accel_measured = False
+strain_gauge_measured = False
 
 
 def user_flow():
+    print("In user_flow")
     choice = -1
     session_start = time.time()
     gyro_accel_data = {}
     strain_gauge_data = {}
     while True:
-        while gyro_accel_measured == False or strain_gauge_measured == False:
+        while gyro_accel_measured is False or strain_gauge_measured is False:
             choice = ask_sensor_type()
         if choice == 0:
             break
