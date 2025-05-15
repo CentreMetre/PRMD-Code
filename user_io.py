@@ -5,10 +5,13 @@ from utils import file_io
 import gyro_accel
 import strain_gauge
 
+gyro_accel_measured = False
+strain_gauge_measured = False
 
 def ask_sensor_type():
     print("in ask sensor type")
-    is_answer_valid = False
+    global gyro_accel_measured
+    global strain_gauge_measured
     choice = -1
 
     valid_answers = [0]
@@ -38,13 +41,10 @@ def input_valid(valid_inputs, choice):
 
 
 
-
 def user_flow():
-
+    global gyro_accel_measured
+    global strain_gauge_measured
     print("In user_flow")
-    gyro_accel_measured = False
-    strain_gauge_measured = False
-
     choice = -1
     session_start = time.time()
     gyro_accel_data = {}
