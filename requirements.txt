@@ -14,8 +14,5 @@ requests-unixsocket2==1.0.0
 smbus2==0.5.0
 typing_extensions==4.13.2
 urllib3==2.4.0
-#RPi.GPIO
-#gpiozero
-#pigpio
 lgpio
 hx711
