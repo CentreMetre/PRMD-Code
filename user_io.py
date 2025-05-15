@@ -50,7 +50,7 @@ def user_flow():
     gyro_accel_data = {}
     strain_gauge_data = {}
     while True:
-        while gyro_accel_measured is False or strain_gauge_measured is False:
+        if gyro_accel_measured is False or strain_gauge_measured is False:
             choice = ask_sensor_type()
             print(f"You chose: {choice}")
         if choice == 0:
