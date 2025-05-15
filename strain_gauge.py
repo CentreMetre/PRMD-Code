@@ -18,39 +18,38 @@ def read_sensor_for_time(seconds):
     end_time = time.time() + seconds
 
     while time.time() < end_time:
-        # Wait until DT goes LOW indicating data is ready
+        # Wait for DT to go LOW (data ready)
         while lgpio.gpio_read(chip, DT):
             pass
 
         count = 0
-        value = 0
 
-        # Read 24 bits from HX711
+        # Read 24 bits
         for _ in range(24):
             lgpio.gpio_write(chip, SCK, 1)
-            time.sleep(0.00001)
-            value = value << 1
-            lgpio.gpio_write(chip, SCK, 0)
-            time.sleep(0.00001)
+            time.sleep(0.000001)
+            count = count << 1
             if lgpio.gpio_read(chip, DT):
-                value += 1
+                count += 1
+            lgpio.gpio_write(chip, SCK, 0)
+            time.sleep(0.000001)
 
-        # One extra clock to set gain for next read
+        # Set channel/gain (1 more clock pulse)
         lgpio.gpio_write(chip, SCK, 1)
-        time.sleep(0.00001)
+        time.sleep(0.000001)
         lgpio.gpio_write(chip, SCK, 0)
-        time.sleep(0.00001)
+        time.sleep(0.000001)
 
-        # Convert to signed 24-bit value
-        if value & 0x800000:
-            value |= ~0xFFFFFF  # Extend sign for negative numbers
+        # Convert to signed 24-bit int
+        if count & 0x800000:
+            count |= ~0xFFFFFF  # Sign extension
 
-        # Add reading with timestamp key
         timestamp = time.time()
-        readings[timestamp] = value
-        print(f"Value: {value}")
+        readings[timestamp] = count
+        print(f"Value: {count}")
 
     return readings
+
 
 
 def run_session():
