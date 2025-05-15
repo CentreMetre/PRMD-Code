@@ -49,14 +49,12 @@ def read_sensor_for_time(seconds):
         timestamp = time.time()
         readings[timestamp] = value
 
-    print("Readings in read function")
-    print(readings)
     return readings
 
 
 def run_session():
     readings = read_sensor_for_time(5)
-
+    return readings
 
 if __name__ == "__main__":
     run_session()
