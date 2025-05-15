@@ -6,6 +6,7 @@ from communication.upload import run_upload
 import user_io
 
 def main():
+    print("In main")
     user_io.user_flow()
     connection_string = settings.IOT_CONNECTION_STRING
     client = get_iot_hub_client(connection_string)
