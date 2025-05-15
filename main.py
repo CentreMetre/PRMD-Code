@@ -7,7 +7,6 @@ from utils import user_io, server
 
 
 def main():
-    print("In main")
     user_io.user_flow()
     server.upload_data()
 
