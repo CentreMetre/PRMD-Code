@@ -1,7 +1,7 @@
 import os
 import time
 import settings
-from utils import file_io
+from utils import file_io, server
 import gyro_accel
 import strain_gauge
 
