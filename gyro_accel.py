@@ -308,7 +308,7 @@ def run_session():
     print("\n\n\nCalibrated data:")
     print(calibrated_readings)
 
-    readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value
+    #readings["sensor_type"] = sensor_enum.SensorType.GYRO_ACCEL.value #Not needed, described in key value in json
 
     return readings
     # file_name = f"{session_start}.json"
