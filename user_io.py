@@ -23,7 +23,7 @@ def ask_sensor_type():
     if strain_gauge_measured == False:
         print("[2] Strain Gauge")
         valid_answers.append(2)
-    print("[0] Exit")
+    print("[0] Exit and save data")
 
     while not input_valid(valid_answers, choice):
         choice = int(input())
@@ -67,6 +67,13 @@ def user_flow():
             print(strain_gauge_data)
     final_readings = {}
     # final_readings["session_start"] = session_start
+
+    print("Gyro Accel data:")
+    print(gyro_accel_data)
+
+    print("Strain Gauge data:")
+    print(strain_gauge_data)
+
     if gyro_accel_data:
         final_readings["gyro_accel"] = strain_gauge_data
     if strain_gauge_data:
