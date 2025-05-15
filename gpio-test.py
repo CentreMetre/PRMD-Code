@@ -53,29 +53,21 @@ def average_readings(num_samples):
 def calibrate():
     global OFFSET, SCALE
 
-    # Step 1: Tare the scale (set the offset)
     input("Place NOTHING on the scale, then press Enter to tare...")
     OFFSET = average_readings(10)
     print(f"Tare set (no load): {OFFSET}")
 
-    # Step 2: Add known weight
     input("Now place the 500g weight on the scale, then press Enter...")
     raw_with_weight = average_readings(10)
     print(f"Reading with 500g: {raw_with_weight}")
 
-    # Step 3: Compute SCALE factor
     delta = raw_with_weight - OFFSET
     if delta == 0:
-        print("Error: No change in weight detected. Check your load cell connection.")
+        print("Error: No weight difference detected.")
         SCALE = 1
     else:
         SCALE = delta / 500.0
         print(f"Calibration complete. SCALE factor: {SCALE:.6f}")
-
-    # Step 4: OPTIONAL — Re-tare now that you've removed the weight
-    input("Now REMOVE the 500g weight, then press Enter to finalise tare...")
-    OFFSET = average_readings(10)
-    print(f"Final tare offset set: {OFFSET}")
 
 
 # Get the weight based on the current scale factor
