@@ -1,3 +1,7 @@
+"""
+Created by Martin McLaren c2645410
+No AI was used in the creation of this code
+"""
 import time
 import lgpio # Tested: RPi.GPIO, pigpio, gpiozero. lgpio will work according to https://forums.raspberrypi.com/viewtopic.php?p=2152007#p2152007
 

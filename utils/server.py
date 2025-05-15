@@ -1,3 +1,7 @@
+"""
+Created in part by Martin McLaren c2645410
+No AI was used in the creation of this code
+"""
 import settings
 from communication.client import get_iot_hub_client
 from communication.upload import run_upload
