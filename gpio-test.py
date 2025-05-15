@@ -41,3 +41,7 @@ def read_hx711():
         count |= ~0xffffff  # Two's complement for 24-bit signed value
 
     return count
+
+if __name__ == "__main__":
+    while True:
+        print(read_hx711())
