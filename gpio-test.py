@@ -70,6 +70,7 @@ def calibrate():
 # Get the weight based on the current scale factor
 def get_weight():
     raw = average_readings(10)  # Apply averaging for stable weight readings
+    print("\n Raw:", raw)
     adjusted = raw - OFFSET
     weight = adjusted / SCALE  # Convert raw value to weight (grams)
     return weight
