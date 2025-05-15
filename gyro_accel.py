@@ -155,9 +155,9 @@ def read_sensors_for_time_with_interval(seconds, interval):
     end = start + seconds
     current_time = time.time()
 
-    print("start:" + str(start))
-    print("end:" + str(end))
-    print("current:" + str(current_time))
+    # print("start:" + str(start))
+    # print("end:" + str(end))
+    # print("current:" + str(current_time))
 
     readings = {}
 
@@ -181,7 +181,6 @@ def read_sensors_for_time_with_interval(seconds, interval):
         # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, GYRO_LOW_Y, GYRO_HIGH_Y))
         # sensor_readings.append(read_sensor_axis(SENSOR_LOWER, GYRO_LOW_Z, GYRO_HIGH_Z))
 
-        print("time.time in loop: " + str(time.time()))
         # Read accelerometer data from SENSOR_UPPER
         UPPER_ACCEL_X = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_X, ACCEL_HIGH_X)
         UPPER_ACCEL_Y = read_sensor_axis(SENSOR_UPPER, ACCEL_LOW_Y, ACCEL_HIGH_Y)
@@ -259,7 +258,6 @@ def calculate_mean_calibration_data(calibration_data):
         mean_calibration_data[name] = 0
         summed_calibration_data[name] = 0
 
-    print("Names in dicts, summed, mean :")
     print(summed_calibration_data)
     print(mean_calibration_data)
 
