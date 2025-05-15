@@ -36,12 +36,15 @@ def input_valid(valid_inputs, choice):
         return False
     return True
 
-gyro_accel_measured = False
-strain_gauge_measured = False
+
 
 
 def user_flow():
+
     print("In user_flow")
+    gyro_accel_measured = False
+    strain_gauge_measured = False
+
     choice = -1
     session_start = time.time()
     gyro_accel_data = {}
