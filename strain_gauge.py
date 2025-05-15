@@ -48,6 +48,7 @@ def read_sensor_for_time(seconds):
         # Add reading with timestamp key
         timestamp = time.time()
         readings[timestamp] = value
+        print(f"Value: {value}")
 
     return readings
 
