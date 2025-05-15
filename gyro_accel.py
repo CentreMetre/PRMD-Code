@@ -289,7 +289,7 @@ def apply_calibration(mean_calibration_data, final_readings):
     return calibrated_readings
 
 def run_session():
-    session_start = time.time()
+    # session_start = time.time()
     initial_config()
     calibration_data = get_calibration_data()
 
