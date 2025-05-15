@@ -17,3 +17,5 @@ def main():
     # or a separate process that checks if we're connected to the internet
     # and if so, it should run the upload function every 5 minutes.
 
+if __name__ == "__main__":
+    main()
