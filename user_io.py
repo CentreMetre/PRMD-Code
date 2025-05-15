@@ -14,7 +14,7 @@ def ask_sensor_type():
     global strain_gauge_measured
     choice = -1
 
-    valid_answers = [0]
+    valid_answers = [0,3] # 0 for exit, 3 for upload
 
     print("Please choose a sensor type:")
     if gyro_accel_measured == False:
@@ -56,12 +56,15 @@ def user_flow():
         if choice == 0:
             break
         if choice == 1:
-            gyro_accel.run_session()
+            gyro_accel_data = gyro_accel.run_session()
             gyro_accel_measured = True
+            print("Gyro Accel data:")
+            print(gyro_accel_data)
         if choice == 2:
-            strain_gauge_data = strain_gauge.run_session()
+            strain_gauge_data = strain_gauge_data = strain_gauge.run_session()
             strain_gauge_measured = True
-
+            print("Strain Gauge data:")
+            print(strain_gauge_data)
     final_readings = {}
     # final_readings["session_start"] = session_start
     if gyro_accel_data:
