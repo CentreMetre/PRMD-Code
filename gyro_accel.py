@@ -300,7 +300,7 @@ def run_session():
     mean_calibration_data = calculate_mean_calibration_data(calibration_data)
     print("Mean calibration data:")
     print(mean_calibration_data)
-    readings = read_sensors_for_time_with_interval(1, 0.25)
+    readings = read_sensors_for_time_with_interval(10, 0.1)
     print("Done reading")
 
     print("\n\n\nUncalibrated data:")
