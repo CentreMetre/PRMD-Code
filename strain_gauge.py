@@ -50,7 +50,7 @@ def read_sensor_for_time(seconds):
 
         timestamp = time.time()
         readings[timestamp] = count
-        # print(f"Value: {count}")
+        print(f"Value: {count}")
 
     return readings
 
