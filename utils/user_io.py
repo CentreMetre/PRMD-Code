@@ -87,6 +87,9 @@ def user_flow():
         print("No data gathered or written.")
         return
 
+    print("Final Readings:")
+    print(final_readings)
+
     file_name = f"{session_start}.json"
     path_to_write = os.path.join(os.getcwd(), settings.SESSION_DIR, file_name)
     file_io.write_to_json_file(path_to_write, final_readings)
