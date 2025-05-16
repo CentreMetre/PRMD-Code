@@ -79,7 +79,7 @@ def user_flow():
     print(strain_gauge_data)
 
     if gyro_accel_data:
-        final_readings["gyro_accel"] = strain_gauge_data
+        final_readings["gyro_accel"] = gyro_accel_data
     if strain_gauge_data:
         final_readings["strain_gauge"] = strain_gauge_data
 
