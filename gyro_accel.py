@@ -247,6 +247,8 @@ def read_sensors_for_time(seconds):
 
 
 def get_calibration_data():
+    print("Press enter to start calibration")
+    input()
     calibration_data = read_sensors_for_time(3)
     return calibration_data
 
@@ -300,6 +302,8 @@ def run_session():
     mean_calibration_data = calculate_mean_calibration_data(calibration_data)
     print("Mean calibration data:")
     print(mean_calibration_data)
+    print("Press enter to start test")
+    input()
     readings = read_sensors_for_time_with_interval(10, 0.1)
     print("Done reading")
 
